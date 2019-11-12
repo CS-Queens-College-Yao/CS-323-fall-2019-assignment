@@ -1,6 +1,10 @@
 /**
+ * Authors: 
+ * 	Jose Santos 1:40 Class
+ * 	Jemima Shikdar 3:10 Class 
+ * 
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
+ * 
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
