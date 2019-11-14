@@ -7,7 +7,7 @@
 public class RunningTrials {
 
   // Do not change the parameters!
-  public int runTrialsRecur(int possibleSpeeds, int weeks) {
+  public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
     return minTests;
@@ -22,7 +22,7 @@ public class RunningTrials {
   }
 
   // Do not change the parameters!
-  public int runTrialsBottomUp(int possibleSpeeds, int weeks) {
+  public int runTrialsBottomUp(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
     return minTests;
