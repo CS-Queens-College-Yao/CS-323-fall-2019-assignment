@@ -10,6 +10,14 @@ public class RunningTrials {
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
+    minTests= Integer.MAX_VALUE;
+    if (possibleSpeeds==1 ||possibleSpeeds ==0 || days == 1) 
+    	return minTests;
+    else 
+    	for (int i=1;i<possibleSpeeds+1; i++) {
+    		minTests=Math.min(minTests,minTests+Math.max(runTrialsRecur(i-1,days-1),runTrialsRecur(possibleSpeeds-i,days)));
+    	}
+    
     return minTests;
   }
 
