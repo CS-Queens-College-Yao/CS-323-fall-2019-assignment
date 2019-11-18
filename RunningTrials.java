@@ -23,10 +23,24 @@ public class RunningTrials {
 
   // Optional:
   // Pick whatever parameters you want to, just make sure to return an int.
-  public int runTrialsMemoized() {
+  public int runTrialsMemoized(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your optional code here
-    return minTests;
+    int trialArray[][] = new int[possibleSpeeds][days];
+    
+    trialArray[possibleSpeeds][days] = Integer.MAX_VALUE;
+    
+    for (int i=0; i<possibleSpeeds;i++) {
+    	trialArray[i][1] =1;
+    }
+    
+    for (int a=1;a<days;a++) {
+    	for (int b=1;b<possibleSpeeds;b++) {
+    		trialArray[a][b] = Math.min(1+Math.max(trialArray[possibleSpeeds-b][days], trialArray[possibleSpeeds-1][days-1]), trialArray[a][b]);
+    	}
+    }
+    
+    return trialArray[possibleSpeeds][days];
   }
 
   // Do not change the parameters!
