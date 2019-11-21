@@ -37,10 +37,17 @@ public class HolidaySpecial {
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
-    // Your code here
+    //We want to choose who has the most consecutive steps, then go from there.
+    int mostConsecutiveChef = -1;
+    for(int i=0; i<numCooks;i++){
+      for(int j=0;j<numSteps;j++){
+        
+        }
+      }
+      return scheduleTable;
+    }
 
-    return scheduleTable;
-  }
+  
 
   /**
    * Makes the convenient lookup table based on the steps each cook says they can do

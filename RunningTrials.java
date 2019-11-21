@@ -9,7 +9,16 @@ public class RunningTrials {
   // Do not change the parameters!
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
-    // Your code here
+    //Do greedy until we have 1 day left, then we go slow.
+    if(days==1){
+      minTests+=possibleSpeeds;
+      System.out.println("Testing from the left");
+    }
+    else{
+      minTests= 1 + runTrialsRecur(possibleSpeeds-1, days-1);
+      System.out.println("Testing speed #" + Integer.toString(possibleSpeeds-1));
+    }
+
     return minTests;
   }
 
@@ -36,7 +45,7 @@ public class RunningTrials {
       int minTrials1Bottom = running.runTrialsBottomUp(12, 5);
       int minTrials2Recur = running.runTrialsRecur(20, 8);
       int minTrials2Bottom = running.runTrialsBottomUp(20, 8);
-      System.out.println("12 speeds, 5 weeks: " + minTrials1Recur + " " + minTrials1Bottom);
-      System.out.println("20 speeds, 8 weeks: " + minTrials2Recur + " " + minTrials2Bottom);
+      System.out.println("12 speeds, 5 days: " + minTrials1Recur + " " + minTrials1Bottom);
+      System.out.println("20 speeds, 8 days: " + minTrials2Recur + " " + minTrials2Bottom);
   }
 }
