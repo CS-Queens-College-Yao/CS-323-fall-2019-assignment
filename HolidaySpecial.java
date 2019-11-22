@@ -36,18 +36,39 @@ public class HolidaySpecial {
     // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
+    int max =0; //?
 
-    //We want to choose who has the most consecutive steps, then go from there.
-    int mostConsecutiveChef = -1;
-    for(int i=0; i<numCooks;i++){
-      for(int j=0;j<numSteps;j++){
-        
+    int consecutiveMax =0;
+    for(int i=1;i<numSteps+1;i++){
+      for(int j=1;j<numCooks+1;j++){
+        int consecCounter =i; // maybe consecCounter=i;
+        int consecutive =0;
+        if(signUpTable[j][i]==1){ // Check if cook signed up for this step. If they did, how many more consecutive can they do?
+          //System.out.println("Chef "+j+ " signed up for "+i);
+          while(consecCounter<signUpTable[j].length && signUpTable[j][consecCounter] == 1){
+            consecutive++;
+            consecCounter++;
+          }
+        }
+        if(consecutive>consecutiveMax){
+          consecutiveMax=consecutive;
+          max=i; // Not calculating max correctly, we go over 8
+          System.out.println("The new max is "+max);
         }
       }
-      return scheduleTable;
+      //Now that we got the highest consec from this step
+      for(int k=0;k<consecutiveMax;k++){
+        scheduleTable[max][i+k]=1; // We pick this one
+      }
+      i+=consecutiveMax; // skip ahead to the end of what we have
+      consecutiveMax=0;
     }
 
-  
+
+
+
+    return scheduleTable;
+  }
 
   /**
    * Makes the convenient lookup table based on the steps each cook says they can do
