@@ -37,7 +37,35 @@ public class HolidaySpecial {
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
-    // Your code here
+    int n = 1; //counter for steps
+    while(n <= numSteps) {
+    	int max_conse_subset = 0;
+    	
+    	int cookIndex = 1; //store cook who will do steps
+    	int steps = 0;
+    	int m = 1;//first cook
+    	
+    	while(m <= numCooks) {
+    		int j = n; //stores no of consecutive steps for each cooks
+    		//finds max_consecutive steps for cook from i to i+j if they do step i
+    		while(j <= numSteps && signUpTable[m][j] == 1 ) {
+    			j++;
+    		}
+    		
+    		if(max_conse_subset < (j - n) ) {
+    			max_conse_subset = j - n;
+    			cookIndex = m;
+    			steps = j-1;
+    		}
+    		m++;
+    	}
+    	
+    	for(int i = n; i <= steps;i++) {
+    		scheduleTable[cookIndex][i] = 1;
+    	}
+    	
+    	n = n+max_conse_subset; // update the steps to new steps value
+    }
 
     return scheduleTable;
   }
