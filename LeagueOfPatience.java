@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.LinkedList;
 
 /**
  * LeagueOfPatience
@@ -40,8 +41,28 @@ public class LeagueOfPatience {
     // Feel free to borrow code from any of the existing methods.
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
+    Date time = startTime;
+    java.util.Arrays.fill(times,Integer.MAX_VALUE);
+    times[S]=0;
+
+    Integer[] prev = new Integer[durations.length]; //Used to reconstruct the play path
+    //For each vertex, apply relaxation for all the edges
+    for(int k=0;k<(durations.length-1);k++){
+      for(int i=0;i<durations.length;i++){
+        for(int j=0;j<durations.length;j++){
+          // If the adjacency matrix is 0, then its not connected and we ignore
+          if(times[i] + durations[i][j] < times[j] && durations[i][j]!=0){ 
+            times[j] = times[i] + durations[i][j];
+            prev[j]=i;
+          }
+        }
+      }
+    }
+
+
 
     printShortestTimes(times);
+    //reconstructShortestPath(T);
 
     // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
   }

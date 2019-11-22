@@ -10,6 +10,6 @@
 
 <b>(c)</b> The genericShortest method is implementing dijkstra's algorithm :heavy_check_mark:
 
-<b>(d)</b> 
+<b>(d)</b> We need to change the code such that the durations are updated dynamically. We also need to add 
 
 <b>(e)</b> Dijkstra's algorithm is O(V+E) 
