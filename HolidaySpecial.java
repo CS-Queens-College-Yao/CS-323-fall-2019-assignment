@@ -52,15 +52,14 @@ public class HolidaySpecial {
         }
         if(consecutive>consecutiveMax){
           consecutiveMax=consecutive;
-          max=i; // Not calculating max correctly, we go over 8
-          System.out.println("The new max is "+max);
+          max=j;
         }
       }
       //Now that we got the highest consec from this step
       for(int k=0;k<consecutiveMax;k++){
         scheduleTable[max][i+k]=1; // We pick this one
       }
-      i+=consecutiveMax; // skip ahead to the end of what we have
+      i+=consecutiveMax-1; // skip ahead to the end of what we have
       consecutiveMax=0;
     }
 
