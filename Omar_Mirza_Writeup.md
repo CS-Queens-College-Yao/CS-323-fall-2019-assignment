@@ -10,6 +10,6 @@
 
 <b>(c)</b> The genericShortest method is implementing dijkstra's algorithm :heavy_check_mark:
 
-<b>(d)</b> We need to change the code such that the durations are updated dynamically. We also need to add 
+<b>(d)</b> We need to change the code such that the durations are updated dynamically. We also need to increment the time according to how long it takes to wait and reach each node.
 
 <b>(e)</b> Dijkstra's algorithm is O(V+E) 

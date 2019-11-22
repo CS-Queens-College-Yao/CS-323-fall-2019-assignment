@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
+ * Author: Omar Mirza and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -51,10 +51,15 @@ public class LeagueOfPatience {
       for(int i=0;i<durations.length;i++){
         for(int j=0;j<durations.length;j++){
           // If the adjacency matrix is 0, then its not connected and we ignore
+          Date nextTime = getNextQuestTime(time, i, j);
+          // Why does minsBetween keep giving super high values?
+          int minsBetween = minutesBetween(time, nextTime);
+          durations[i][j]+= minsBetween;
           if(times[i] + durations[i][j] < times[j] && durations[i][j]!=0){ 
             times[j] = times[i] + durations[i][j];
             prev[j]=i;
           }
+          time = nextTime;
         }
       }
     }
@@ -62,7 +67,6 @@ public class LeagueOfPatience {
 
 
     printShortestTimes(times);
-    //reconstructShortestPath(T);
 
     // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
   }

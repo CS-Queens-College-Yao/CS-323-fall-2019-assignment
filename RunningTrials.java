@@ -9,24 +9,22 @@ public class RunningTrials {
   // Do not change the parameters!
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
-    //Do greedy until we have 1 day left, then we go slow.
-    if(days==1){
-      minTests+=possibleSpeeds;
-      System.out.println("Testing from the left");
-    }
-    else{
-      minTests= 1 + runTrialsRecur(possibleSpeeds-1, days-1);
-      System.out.println("Testing speed #" + Integer.toString(possibleSpeeds-1));
-    }
-
+    if(days==1) return possibleSpeeds;
+    if(possibleSpeeds==2) return 1;
+    minTests = Math.min(runTrialsRecur(possibleSpeeds-1, days-1), runTrialsRecur(possibleSpeeds-1, days))+1;
     return minTests;
   }
 
   // Optional:
   // Pick whatever parameters you want to, just make sure to return an int.
-  public int runTrialsMemoized() {
+  public int runTrialsMemoized(int possibleSpeeds, int days) {
     int minTests = 0;
-    // Your optional code here
+    int pastTrials[][];
+    for(int i=0;i<possibleSpeeds;i++){
+      // Check if we have it in our array
+      // If we don't, then lets calculate it using Math.min(runTrialsRecur(possibleSpeeds-1, days-1), runTrialsRecur(possibleSpeeds-1, days))+1;
+      // Then add it to the array and go next
+    }
     return minTests;
   }
 
