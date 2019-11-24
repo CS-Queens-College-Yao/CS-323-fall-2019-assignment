@@ -2,6 +2,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
 
 /**
  * LeagueOfPatience
@@ -54,17 +56,17 @@ public class LeagueOfPatience {
           Date nextTime = getNextQuestTime(time, i, j);
           // Why does minsBetween keep giving super high values?
           int minsBetween = minutesBetween(time, nextTime);
+          //Updates our adjacency matrix before we determine whether its the shortest
           durations[i][j]+= minsBetween;
           if(times[i] + durations[i][j] < times[j] && durations[i][j]!=0){ 
+            // Only update the time when we choose a node.
             times[j] = times[i] + durations[i][j];
             prev[j]=i;
+            time = nextTime;
           }
-          time = nextTime;
         }
       }
     }
-
-
 
     printShortestTimes(times);
 
