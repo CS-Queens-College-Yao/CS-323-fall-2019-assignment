@@ -10,9 +10,10 @@ public class RunningTrials {
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
-    return minTests;
+    
+    return minTests;  
   }
-
+  
   // Optional:
   // Pick whatever parameters you want to, just make sure to return an int.
   public int runTrialsMemoized() {
