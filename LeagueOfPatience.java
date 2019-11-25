@@ -34,6 +34,61 @@ public class LeagueOfPatience {
     int[][] durations
   ) {
     int[] times = new int[durations.length];
+    int numVertices = durations[0].length;
+    Date [] storedTimes = new Date[durations.length];
+    storedTimes[0]=startTime;
+    int [] intermission = new int [durations.length];
+    // processed[i] will true if vertex i's shortest time is already finalized
+    Boolean[] processed = new Boolean[numVertices];
+
+    // Initialize all distances as INFINITE and processed[] as false
+    for (int v = 0; v < numVertices; v++) {
+      times[v] = Integer.MAX_VALUE;
+      processed[v] = false;
+    }
+
+    // Distance of source vertex from itself is always 0
+    times[S] = 0;
+
+    // Find shortest path to all the vertices
+    for (int count = 0; count < numVertices - 1 ; count++) {
+      // Pick the minimum distance vertex from the set of vertices not yet processed.
+      // u is always equal to source in first iteration.
+      // Mark u as processed.
+      int u = findNextToProcess(times, processed);
+      processed[u] = true;
+
+      // Update time value of all the adjacent vertices of the picked vertex.
+      for (int v = 0; v < numVertices; v++) {
+        // Update time[v] only if is not processed yet, there is an edge from u to v,
+        // and total weight of path from source to v through u is smaller than current value of time[v]
+        if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+durations[u][v] < times[v]) {
+          times[v] = times[u] + durations[u][v];
+          storedTimes[v]=getNextQuestTime(storedTimes[v-1],u,v);
+          intermission[v]= minutesBetween(storedTimes[v-1],storedTimes[v]);
+        }
+
+      }
+    }
+
+
+
+    //minutesBetween(newTime,startTime);
+    //String sDate1=newTime;
+    //Date date1=null;
+    //try {
+    //   date1 = new SimpleDateFormat("hh:mm").parse(newTime);
+    //} catch (ParseException e) {
+    //  e.printStackTrace();
+    //}
+    // System.out.println(date1);
+
+
+    for(int w = 1; w<durations.length;w++){
+      times[w]=times[w-1]+(times[w]+(intermission[w]/60));
+      //   System.out.println(storedTimes[w]);
+
+    }
     // Your code along with comments here. Use the genericShortest function for reference.
     // You want to do similar things as the generic shortest function, except you want
     // to account for the time until the next quest time at each arrival at a location.
