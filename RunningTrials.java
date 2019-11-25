@@ -25,11 +25,12 @@ public class RunningTrials {
   public int runTrialsBottomUp(int possibleSpeeds, int weeks) {
     int minTests = 0;
     // Your code here
-    if(weeks = 0){
-      return 0;}
+    if(weeks = 0)
+      return 0;
     for(int i = 0; i < possibleSpeeds; i++){
      for(int j = 0; j < weeks; j++){
       runTrialsBottomUp[i,j]= max(runTrialsBottomUp(i-1, j) + runTrialsBottomUp(i, j+1));
+      minTests[i,j] = runTrialBottomUp [i,j];
      }
    }
     return minTests;
