@@ -27,7 +27,7 @@ public class RunningTrials {
         return minTests;
     }
 
-  // Optional: test
+  // Optional:
   // Pick whatever parameters you want to, just make sure to return an int.
   public int runTrialsMemoized(int possibleSpeeds, int days) {
     int minTests = 0;
