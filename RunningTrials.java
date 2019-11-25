@@ -25,6 +25,10 @@ public class RunningTrials {
   public int runTrialsBottomUp(int possibleSpeeds, int weeks) {
     int minTests = 0;
     // Your code here
+    if(weeks = 0){
+      return 0;}
+    for(int i = 0; i < weeks; i++){
+     }
     return minTests;
   }
 
