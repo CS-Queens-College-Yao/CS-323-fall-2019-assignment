@@ -38,6 +38,17 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
+    scheduleTable=signUpTable;
+
+    for(int i =1; i<numCooks+1;i++){
+      for(int j = 1; j<numSteps+1;j++){
+        for(int f = i; f<numCooks;f++) {
+          if (scheduleTable[i][j] == scheduleTable[f + 1][j]) {
+            scheduleTable[f + 1][j] = 0;
+          }
+        }
+      }
+    }
 
     return scheduleTable;
   }
