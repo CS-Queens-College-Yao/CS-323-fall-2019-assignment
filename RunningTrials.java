@@ -28,7 +28,9 @@ public class RunningTrials {
     if(weeks = 0){
       return 0;}
     for(int i = 0; i < weeks; i++){
-     }
+     for(int j = 0; j < possibleSpeeds; j++){
+      }
+   }
     return minTests;
   }
 
