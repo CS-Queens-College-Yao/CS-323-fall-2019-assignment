@@ -27,9 +27,9 @@ public class RunningTrials {
     // Your code here
     if(weeks = 0){
       return 0;}
-    for(int i = 0; i < weeks; i++){
-     for(int j = 0; j < possibleSpeeds; j++){
-      }
+    for(int i = 0; i < possibleSpeeds; i++){
+     for(int j = 0; j < weeks; j++){
+      runTrialsBottomUp[i,j]=}
    }
     return minTests;
   }
