@@ -1,7 +1,8 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
+ * Author: Reveka Lee and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
+ N
  */
 
 /**
@@ -38,7 +39,9 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
-
+    for(int i = 0; i < numCooks; i++){
+      for(int j = 0; j < numSteps; j++){
+        
     return scheduleTable;
   }
 
