@@ -2,6 +2,7 @@
  * Running Trials
  * Author: Reveka Lee and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
+ N
  */
 
 public class RunningTrials {
@@ -10,7 +11,7 @@ public class RunningTrials {
   public int runTrialsRecur(int possibleSpeeds, int weeks) {
     int minTests = 0;
     // Your code here
-    return minTests;
+    return minTests + runTrialsRecur(possibleSpeeds-1, weeks+1);
   }
 
   // Optional:
@@ -25,8 +26,6 @@ public class RunningTrials {
   public int runTrialsBottomUp(int possibleSpeeds, int weeks) {
     int minTests = 0;
     // Your code here
-    if(weeks = 0)
-      return 0;
     for(int i = 0; i < possibleSpeeds; i++){
      for(int j = 0; j < weeks; j++){
       runTrialsBottomUp[i,j]= max(runTrialsBottomUp(i-1, j) + runTrialsBottomUp(i, j+1));
