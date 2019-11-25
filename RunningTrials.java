@@ -29,7 +29,8 @@ public class RunningTrials {
       return 0;}
     for(int i = 0; i < possibleSpeeds; i++){
      for(int j = 0; j < weeks; j++){
-      runTrialsBottomUp[i,j]=}
+      runTrialsBottomUp[i,j]= min(runTrialsBottomUp(i, minTests) + runTrialsBottomUp(minTests, j));
+     }
    }
     return minTests;
   }
