@@ -27,21 +27,51 @@ public class HolidaySpecial {
    * @return scheduleTable: a table similar to the signUpTable where scheduleTable[X][Y] = 1 means
    *     cook X is assigned to step Y in an optimal schedule
    */
+	
+public int[][] makeShifts(
+		int numCooks,
+		int numSteps,
+		int[][] signUpTable
+		) {
+		// Your scheduleTable is initialized as all 0's so far. Your code will put 1's
+		// in the table in the right places based on the return description
+		int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
+	
+		//find the cook with most consecutive # of steps	
+		//code based on MaxRepeatingBruteForce.java
 
-  public int[][] makeShifts(
-    int numCooks,
-    int numSteps,
-    int[][] signUpTable
-  ) {
-    // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
-    // in the table in the right places based on the return description
-    int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
+//		for(int i = 1; i <= numSteps; i++) {
+	
+				int maxCount = 0;
+				int curCook = 0;
 
-    // Your code here
+				for(int cook = 1; cook <= numCooks ; cook++) {
+					int count = 1;
+					for(int step = 1; step <= numSteps ; step++) {			
+						if(signUpTable[cook][step] == 1) {
+							count++;
+						}
+					}
+    	
+					if(maxCount < count) {
+						maxCount = count;
+						curCook = cook;
+					}
+				}
 
-    return scheduleTable;
+				for (int k = 1; k <= numSteps; k++) {
+					if (signUpTable[curCook][k] == 1 ) {
+						scheduleTable[curCook][k] = 1;	
+					}else {
+						//move to the next cook who can do most consecutive steps for the rest steps(signed up to)
+					}
+				}
+			
+//		}  
+    	return scheduleTable;
   }
 
+		            
   /**
    * Makes the convenient lookup table based on the steps each cook says they can do
    * @param numSteps the number of steps in the recipe
