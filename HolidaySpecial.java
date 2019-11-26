@@ -41,7 +41,7 @@ public class HolidaySpecial {
     // Your code here
     for(int i = 0; i < numCooks; i++){
       for(int j = 0; j < numSteps; j++){
-        
+        if(
     return scheduleTable;
   }
 
