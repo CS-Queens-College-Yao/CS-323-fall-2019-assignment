@@ -1,6 +1,6 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
+ * Author: Mohebullah Mir and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -38,10 +38,39 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
-
+   
+    for(int i =1;i<=numCooks;i++){
+      
+       for(int j=1;j<=numSteps;j++){
+        
+         
+        if(j!=numSteps && signUpTable[i][j] ==1 && signUpTable[i][j+1]==1 && colcheck(scheduleTable,numCooks,j)==0)  scheduleTable[i][j]=1;
+        if(j==numSteps && signUpTable[i][j]==1 &&colcheck(scheduleTable,numCooks,j)==0)  scheduleTable[i][j]=1;
+        if(colcheck(signUpTable, numCooks, j)==0 && signUpTable[i][j]==1) scheduleTable[i][j]=1;
+        if(j!=numSteps && signUpTable[i][j]==1 &&colcheck(scheduleTable,numCooks,j)==0 && colcheck(scheduleTable,numCooks,j+1)==1) scheduleTable[i][j]=1;
+         
+  
+          
+    
+  
+      }
+    }
+  
+    
+  
     return scheduleTable;
   }
+  public int colcheck(int[][] table, int rows, int col){ 
+    int val =0;
+    for(int i=0;i<rows;i++){
+      if (table[i][col] == 1) val=1;
+    }
+    return val;
+  } //check to make sure 2 cooks aren't assigned 1 job.
 
+
+  
+  
   /**
    * Makes the convenient lookup table based on the steps each cook says they can do
    * @param numSteps the number of steps in the recipe
