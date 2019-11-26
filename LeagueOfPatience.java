@@ -34,12 +34,52 @@ public class LeagueOfPatience {
     int[][] durations
   ) {
     int[] times = new int[durations.length];
+    
     // Your code along with comments here. Use the genericShortest function for reference.
     // You want to do similar things as the generic shortest function, except you want
     // to account for the time until the next quest time at each arrival at a location.
     // Feel free to borrow code from any of the existing methods.
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
+
+    int numVertices = durations[0].length; 
+    Boolean[] processed = new Boolean[numVertices];
+    
+    // Initialize all distances as INFINITE and processed[] as false
+    for(int v = 0; v < numVertices; v++) {
+    	times[v] = Integer.MAX_VALUE; 
+    	processed[v] = false;
+    }
+
+    int sTime = (int) (startTime.getTime()/1000 + times[S]);
+
+    times[S] = sTime;
+
+    // Find shortest path to T 
+    for (int count = 0; count < numVertices - 1 ; count++) {
+        // Pick the minimum distance vertex from the set of vertices not yet processed.
+        // u is always equal to source in first iteration.
+        // Mark u as processed.
+        int u = findNextToProcess(times, processed);
+        processed[u] = true;
+
+        if(u == T) {
+        	break;
+        }
+        // Update time value of all the adjacent vertices of the picked vertex.
+        for (int v = 0; v < numVertices;  v++) {
+
+            if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+durations[u][v] < times[v]) {
+                times[v] = times[u] + durations[u][v];
+              }
+        	
+        	if(times[v] < durations[u][v]) {
+        		times[v] = times[v]+ durations[u][v]-times[S];
+        	}
+        	
+        }
+      }
+    
 
     printShortestTimes(times);
 
@@ -56,6 +96,8 @@ public class LeagueOfPatience {
    * @param v Look up quest endpoint
    * @return the next quest time as a Date object
    */
+  
+  
   public Date getNextQuestTime(Date askingTime, int u, int v) {
     int minutesUntilNext = (int) (Math.random() * ((30) + 1) + (v-u));
     Calendar calendar = Calendar.getInstance();
@@ -78,6 +120,7 @@ public class LeagueOfPatience {
    * @param processed boolean array tells you which vertices have been fully processed
    * @return the index of the vertex that is next vertex to process
    */
+  
   public int findNextToProcess(int[] times, Boolean[] processed) {
     int min = Integer.MAX_VALUE;
     int minIndex = -1;
@@ -91,6 +134,8 @@ public class LeagueOfPatience {
     return minIndex;
   }
 
+  
+  
   public void printShortestTimes(int times[]) {
     System.out.println("Play time to advance to various locations");
     for (int i = 0; i < times.length; i++)
@@ -164,5 +209,7 @@ public class LeagueOfPatience {
     }
 
     // You can create a test case for your implemented method for extra credit below
+    
+    
   }
 }
