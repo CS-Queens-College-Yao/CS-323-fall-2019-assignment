@@ -65,8 +65,12 @@ public class LeagueOfPatience {
       for (int v = 0; v < numVertices; v++) {
         // Update time[v] only if is not processed yet, there is an edge from u to v,
         // and total weight of path from source to v through u is smaller than current value of time[v]
-        if (!processed[v] && graph[u][v]!=0 && times[u] != Integer.MAX_VALUE && getAbsoluteTime(times[u],graph[u][v],u,v,startTime) < times[v]) {
-          times[v] = times[u] + graph[u][v];
+        if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE) {
+          // Get the time it takes to complete the quest, and attain the next quest
+          int timeIncludingAPICall = getAbsoluteTime(times[u],durations[u][v],u,v,startTime);
+          // If the time that it takes based on the path above is lower the the current time, update it this time
+          if(timeIncludingAPICall < times[v])
+            times[v] = timeIncludingAPICall;
         }
       }
     }
@@ -85,14 +89,15 @@ public class LeagueOfPatience {
     int resultingTime = startingTime + travelTime;
     calendar.add(Calendar.MINUTE, resultingTime);
     Date resultTimeObject = calendar.getTime();
-    long startTimeInMili = sourceBeginingTime.getTimeInMillis();
     Date newQuest = getNextQuestTime(resultTimeObject,initialVertex,destinationVertex);
     if(newQuest.compareTo(resultTimeObject) > 0) return getMinutes(newQuest) - startingTime;
     else return resultingTime;
   }
 
   public int getMinutes(Date date){
-    return ((int) date.getTime()) / 60000;
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    return calendar.get(Calendar.MINUTE);
   }
 
   /**
