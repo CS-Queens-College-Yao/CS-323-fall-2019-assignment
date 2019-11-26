@@ -11,10 +11,10 @@ public class RunningTrials {
     int minTests = 0;
     // Your code here
     minTests= Integer.MAX_VALUE;
-    if (possibleSpeeds==1 ||possibleSpeeds ==0 || days == 1) 
-    	return 1;
+    if (possibleSpeeds==1 ||possibleSpeeds ==0 || days == 1 ||days==0) 
+    	return possibleSpeeds;
     else 
-    	for (int i=1;i<possibleSpeeds+1; i++) {
+    	for (int i=1;i<possibleSpeeds; i++) {
     		minTests=Math.min(minTests,1+Math.max(runTrialsRecur(possibleSpeeds-i,days),runTrialsRecur(i-1,days-1)));
     	}
     
@@ -26,27 +26,50 @@ public class RunningTrials {
   public int runTrialsMemoized(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your optional code here
-    int trialArray[][] = new int[possibleSpeeds][days];
-    
-    trialArray[possibleSpeeds][days] = Integer.MAX_VALUE;
-    
-    for (int i=0; i<possibleSpeeds;i++) {
-    	trialArray[i][1] =1;
-    }
-    
-    for (int a=1;a<days;a++) {
-    	for (int b=1;b<possibleSpeeds;b++) {
-    		trialArray[a][b] = Math.min(1+Math.max(trialArray[possibleSpeeds-b][days], trialArray[possibleSpeeds-1][days-1]), trialArray[a][b]);
-    	}
-    }
-    
-    return trialArray[possibleSpeeds][days];
+    return minTests;
   }
 
   // Do not change the parameters!
   public int runTrialsBottomUp(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
+    
+    int trialArray[][] = new int[possibleSpeeds+1][days+1];
+    
+    //trialArray[possibleSpeeds][days] = Integer.MAX_VALUE;
+    for (int i=0;i<=possibleSpeeds;i++) {
+    	for (int j=0;j<=days;j++) {
+    		trialArray[i][j]= Integer.MAX_VALUE;
+    	}
+    }
+    
+    for (int j=0; j<days;j++) {
+    	trialArray[0][j] =0;
+    }
+    
+    for (int m=0;m<possibleSpeeds;m++) {
+    	trialArray[m][0]=0;
+    }
+    
+    for (int i=1; i<possibleSpeeds;i++) {
+    	trialArray[i][1] =1;
+    }
+    
+    for (int a=2;a<=possibleSpeeds;a++) {
+    	for (int b=2;b<=days;b++) {
+    		if (trialArray[a-1][b-1] ==0|| trialArray[a][b-1]==1) {
+    			trialArray[a][b] = 1;
+    		}
+    		int max = 1+Math.max(trialArray[a-1][b-1], trialArray[a][b-1]) ;
+    		if ( max <trialArray[a][b] )
+    			trialArray[a][b] = max;
+    		
+    	}
+    }
+    
+   
+    
+    minTests = trialArray[possibleSpeeds][days];
     return minTests;
   }
 
