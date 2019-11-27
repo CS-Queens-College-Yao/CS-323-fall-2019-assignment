@@ -110,9 +110,6 @@ public class RunningTrials {
 
   public static void main(String args[]){
       RunningTrials running = new RunningTrials();
-      int s, d;
-      s = 10;
-      d = 1;
       // Do not touch the below lines of code, your output will automatically be formatted
       int minTrials1Recur = running.runTrialsRecur(12, 5);
       int minTrials1Bottom = running.runTrialsBottomUp(12, 5);
