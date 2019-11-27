@@ -40,10 +40,67 @@ public class LeagueOfPatience {
     // Feel free to borrow code from any of the existing methods.
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
+    int numVertices = durations.length;
+    // processed[i] will true if vertex i's shortest time is already finalized
+    Boolean[] processed = new Boolean[numVertices];
+
+    // Initialize all distances as INFINITE and processed[] as false
+    for (int v = 0; v < numVertices; v++) {
+      times[v] = Integer.MAX_VALUE;
+      processed[v] = false;
+    }
+
+    // Distance of source vertex from itself is always 0
+    times[S] = 0;
+
+    // Find shortest path to all the vertices
+    for (int count = 0; count < numVertices - 1 ; count++) {
+      // Pick the minimum distance vertex from the set of vertices not yet processed.
+      // u is always equal to source in first iteration.
+      // Mark u as processed.
+      int u = findNextToProcess(times, processed);
+      processed[u] = true;
+
+      // Update time value of all the adjacent vertices of the picked vertex.
+      for (int v = 0; v < numVertices; v++) {
+        // Update time[v] only if is not processed yet, there is an edge from u to v,
+        // and total weight of path from source to v through u is smaller than current value of time[v]
+        if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE) {
+          // Get the time it takes to complete the quest, and attain the next quest
+          int timeIncludingAPICall = getAbsoluteTime(times[u],durations[u][v],u,v,startTime);
+          System.out.println("Return: " + timeIncludingAPICall);
+          // If the time that it takes based on the path above is lower the the current time, update it this time
+          if(timeIncludingAPICall < times[v])
+            times[v] = timeIncludingAPICall;
+        }
+      }
+    }
 
     printShortestTimes(times);
 
     // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
+  }
+  /**
+   * This function determines the time it takes to get from 1 vertex to another
+   * factoring in Quest Time Delay
+   */
+  public int getAbsoluteTime(int startingTime,int travelTime,int initialVertex,int destinationVertex, Date sourceBeginingTime){
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(sourceBeginingTime);
+    int resultingTime = startingTime + travelTime;
+    calendar.add(Calendar.MINUTE, resultingTime);
+    Date resultTimeObject = calendar.getTime();
+    Date newQuest = getNextQuestTime(resultTimeObject,initialVertex,destinationVertex);
+    int apiTime = getMinutes(newQuest);
+    System.out.println("Starting: " + startingTime +"\nTravel: " + travelTime + "\nAPI: " + getMinutes(newQuest));
+    if(apiTime>resultingTime) return apiTime - startingTime;
+    else return resultingTime;
+  }
+
+  public int getMinutes(Date date){
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    return calendar.get(Calendar.MINUTE);
   }
 
   /**
