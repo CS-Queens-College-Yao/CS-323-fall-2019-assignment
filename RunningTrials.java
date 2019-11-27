@@ -59,7 +59,7 @@ public class RunningTrials {
     	trialArray[1][a]=a;
     }
     for (int a=2;a<=days;a++) {
-    	for (int b=1;b<=possibleSpeeds;b++) {
+    	for (int b=a+1;b<=possibleSpeeds;b++) {
     	
     		
     		//int max = 1+Math.max(trialArray[a-1][b], trialArray[a][b-1]) ;
