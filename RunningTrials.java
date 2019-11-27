@@ -34,42 +34,49 @@ public class RunningTrials {
     int minTests = 0;
     // Your code here
     
-    int trialArray[][] = new int[possibleSpeeds+1][days+1];
+    int trialArray[][] = new int[days+1][possibleSpeeds+1];
     
     //trialArray[possibleSpeeds][days] = Integer.MAX_VALUE;
-    for (int i=0;i<=possibleSpeeds;i++) {
-    	for (int j=0;j<=days;j++) {
+    for (int i=2;i<=days;i++) {
+    	for (int j=2;j<=possibleSpeeds;j++) {
+    	
     		trialArray[i][j]= Integer.MAX_VALUE;
     	}
     }
     
-    for (int j=0; j<days;j++) {
+    for (int j=0; j<possibleSpeeds;j++) {
     	trialArray[0][j] =0;
     }
     
-    for (int m=0;m<possibleSpeeds;m++) {
+    for (int m=0;m<days;m++) {
     	trialArray[m][0]=0;
     }
     
-    for (int i=1; i<possibleSpeeds;i++) {
-    	trialArray[i][1] =1;
+		/*
+		 * for (int i=1; i<possibleSpeeds;i++) { trialArray[i][1] =1; }
+		 */
+    for (int a =1;a<possibleSpeeds;a++) {
+    	trialArray[1][a]=a;
     }
-    
-    for (int a=2;a<=possibleSpeeds;a++) {
-    	for (int b=2;b<=days;b++) {
-    		if (trialArray[a-1][b-1] ==0|| trialArray[a][b-1]==1) {
-    			trialArray[a][b] = 1;
-    		}
-    		int max = 1+Math.max(trialArray[a-1][b-1], trialArray[a][b-1]) ;
-    		if ( max <trialArray[a][b] )
-    			trialArray[a][b] = max;
+    for (int a=2;a<=days;a++) {
+    	for (int b=1;b<=possibleSpeeds;b++) {
+    	
     		
+    		//int max = 1+Math.max(trialArray[a-1][b], trialArray[a][b-1]) ;
+				/*
+				 * if ( max <trialArray[a][b] ) System.out.println(max); trialArray[a][b] = max;
+				 */
+    		//System.out.println(max);
+    		int min = Math.min(trialArray[a-1][b], trialArray[a][b-1]);
+    		System.out.println(min);
+    		trialArray[a][b]=1+min;
+    			//System.out.println(trialArray[a][b]);
     	}
     }
-    
+    System.out.println("--------------------------------"); //REMOVE AFTER TESTING!!!!!!!!!!!!
    
     
-    minTests = trialArray[possibleSpeeds][days];
+    minTests = trialArray[days][possibleSpeeds];
     return minTests;
   }
 
