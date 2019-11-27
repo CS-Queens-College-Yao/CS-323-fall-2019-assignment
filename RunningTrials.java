@@ -36,7 +36,6 @@ public class RunningTrials {
     
     int trialArray[][] = new int[days+1][possibleSpeeds+1];
     
-    //trialArray[possibleSpeeds][days] = Integer.MAX_VALUE;
     for (int i=2;i<=days;i++) {
     	for (int j=2;j<=possibleSpeeds;j++) {
     	
@@ -52,28 +51,19 @@ public class RunningTrials {
     	trialArray[m][0]=0;
     }
     
-		/*
-		 * for (int i=1; i<possibleSpeeds;i++) { trialArray[i][1] =1; }
-		 */
+		
     for (int a =1;a<=possibleSpeeds;a++) {
     	trialArray[1][a]=a;
     }
     for (int a=2;a<=days;a++) {
     	for (int b=a+1;b<=possibleSpeeds;b++) {
     	
-    		
-    		//int max = 1+Math.max(trialArray[a-1][b], trialArray[a][b-1]) ;
-				/*
-				 * if ( max <trialArray[a][b] ) System.out.println(max); trialArray[a][b] = max;
-				 */
-    		//System.out.println(max);
     		int min = Math.min(trialArray[a-1][b], trialArray[a][b-1]);
     		System.out.println(min);
     		trialArray[a][b]=1+min;
-    			//System.out.println(trialArray[a][b]);
     	}
     }
-    System.out.println("--------------------------------"); //REMOVE AFTER TESTING!!!!!!!!!!!!
+
    
     
     minTests = trialArray[days][possibleSpeeds];
