@@ -40,7 +40,7 @@ public class RunningTrials {
     for (int i=2;i<=days;i++) {
     	for (int j=2;j<=possibleSpeeds;j++) {
     	
-    		trialArray[i][j]= Integer.MAX_VALUE;
+    		trialArray[i][j]= 1;
     	}
     }
     
