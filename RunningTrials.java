@@ -55,7 +55,7 @@ public class RunningTrials {
 		/*
 		 * for (int i=1; i<possibleSpeeds;i++) { trialArray[i][1] =1; }
 		 */
-    for (int a =1;a<possibleSpeeds;a++) {
+    for (int a =1;a<=possibleSpeeds;a++) {
     	trialArray[1][a]=a;
     }
     for (int a=2;a<=days;a++) {
