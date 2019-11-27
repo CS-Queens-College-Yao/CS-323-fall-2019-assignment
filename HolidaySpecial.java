@@ -1,7 +1,7 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Carolyn Yao, Students: Choun H. Lee, Divya Samaroo, Kenneth Hill, Mohammed Rahat
+ * Does this compile or finish running within 5 seconds? Y/N = Answer: Yes
  */
 
 /**
@@ -38,6 +38,97 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
+    //************************************************************************************************
+    // Our code begins here
+    // array to check remaining steps. 0 means not done, 1 means done
+    long startTime = System.nanoTime();
+    
+    int finishedSteps[] = new int[numSteps + 1];
+    int remainingSteps = 0;
+    for (int i = 1; i < finishedSteps.length; i++)
+    {
+    	finishedSteps[i] = 0;
+    	//counting number of total steps needed for recipe
+    	remainingSteps++;
+    }
+    
+    // greedy algorithm below
+    int consecSeq = 0, counter = 0, previousStep = 0, maxCount = 0, topChef = 0, topChefCounter = 0,
+    		topChefStart = 0, lastStep = 0, topChefSeq = 0, previousChef = 0;
+    
+    // algorithm continues as long as remaining steps remain
+    while (remainingSteps > 0) {
+    	for(int i = 1; i <= numCooks; i++)
+    	{
+    		for(int j = 1; j < signUpTable[i].length; j++)
+    		{
+    			//checking previous step to ensure consecutive sequence
+    			previousStep = signUpTable[i][j-1];
+    			if(previousStep == 0) {
+    				//resets counter if cook's available step is not consecutive
+    				counter = 0;
+    				//counting number of consecutive steps will remain if current chef is taken
+    				consecSeq++;
+    			}
+    			// if chef can do consecutive steps, count the number of consecutive steps chef can do
+    			if(finishedSteps[j] == 0 && signUpTable[i][j] == 1) {
+    				counter++;
+    				// maxCount = largest consecutive steps the current chef can do
+    				if(maxCount <= counter)
+    				{
+    					maxCount = counter;
+    					//lastStep = last step of the largest consecutive step current chef can do
+    					lastStep = j+1;
+    				}
+    			}
+    		}
+    		// picks the best chef, chef with largest consecutive steps
+    		if(topChefCounter < maxCount)
+    		{
+    			topChefCounter = maxCount;
+    			topChef = i;
+    			topChefSeq = consecSeq;
+    			topChefStart = lastStep - topChefCounter;
+    		}else if(topChefCounter == maxCount && topChefSeq >= consecSeq)
+    			// if consecutive steps are identical, pick the chef that will leave least number of 
+    			// consecutive steps remain in the recipe
+    		{
+    			topChefCounter = maxCount;
+    			topChef = i;
+    			topChefSeq = consecSeq;
+    			topChefStart = lastStep - topChefCounter;
+    		} 
+    		// resetting counter
+        	counter = 0;
+        	consecSeq = 0;
+        	maxCount = 0;
+    	}
+    	if (previousChef != topChef){
+    	   	// assigning top chef to the schedule, and eliminate steps to do
+        	for(int i = topChefStart; i < topChefStart + topChefCounter; i++)
+        	{
+        		if(signUpTable[topChef][i] == 1)
+        		{
+        			finishedSteps[i] = 1;
+        			scheduleTable[topChef][i] = 1;
+        		}
+        	}
+        	// subtract remaining steps with steps done by our top chef
+        	remainingSteps -= topChefCounter;
+        	
+        	// reset chef counter to pick next chef
+        	topChefCounter = 0;
+    		topChef = 0;
+    	}
+    	previousChef = topChef;
+
+    }
+    
+    
+    System.out.println("Total Runtime of our portion of code is: " +
+    		((System.nanoTime() - startTime)) + " nanoseconds");
+    // end of our code
+    //************************************************************************************************
 
     return scheduleTable;
   }
