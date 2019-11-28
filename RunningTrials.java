@@ -10,12 +10,13 @@ public class RunningTrials {
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
-    minTests= Integer.MAX_VALUE;
-    if (possibleSpeeds==1 ||possibleSpeeds ==0 || days == 1 ||days==0) 
+    if (possibleSpeeds==1 ||possibleSpeeds ==0 || days ==1 || days ==0)
     	return possibleSpeeds;
     else 
-    	for (int i=1;i<possibleSpeeds; i++) {
-    		minTests=Math.min(minTests,1+Math.max(runTrialsRecur(possibleSpeeds-i,days),runTrialsRecur(i-1,days-1)));
+    	for (int i=1;i<=possibleSpeeds; i++) {
+    		int max = Math.max(runTrialsRecur(possibleSpeeds-i,days),runTrialsRecur(i-1,days-1));
+    		if (minTests < max )
+    			minTests = max;
     	}
     
     return minTests;
@@ -51,7 +52,7 @@ public class RunningTrials {
     	trialArray[m][0]=0;
     }
     
-		
+		 
     for (int a =1;a<=possibleSpeeds;a++) {
     	trialArray[1][a]=a;
     }
@@ -59,13 +60,9 @@ public class RunningTrials {
     	for (int b=a+1;b<=possibleSpeeds;b++) {
     	
     		int min = Math.min(trialArray[a-1][b], trialArray[a][b-1]);
-    		System.out.println(min);
     		trialArray[a][b]=1+min;
     	}
     }
-
-   
-    
     minTests = trialArray[days][possibleSpeeds];
     return minTests;
   }
