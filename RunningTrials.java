@@ -1,6 +1,6 @@
 /**
  * Running Trials
- * Author: Your Name and Carolyn Yao
+ * Author: Arhum Khan and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
