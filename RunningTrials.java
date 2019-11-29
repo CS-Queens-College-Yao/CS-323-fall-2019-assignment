@@ -20,8 +20,13 @@ public class RunningTrials {
 	
 	int temp; 
 	
+	//Iterate through each speed
 	for(int i = 1; i <= possibleSpeeds; i++){
+		
+		//Out of the two cases (injured or not injured), choose the greater
 		temp = 1 + Math.max(runTrialsRecur(i - 1, days - 1), runTrialsRecur(possibleSpeeds - i, days));
+		
+		//Choose the speed with the least amount of trials 
 		if(temp < minTests) minTests = temp;
 	}
 	
@@ -33,6 +38,7 @@ public class RunningTrials {
   public int runTrialsMemoized(int possibleSpeeds, int days) {
 	int[][] minTests = new int[days + 1][possibleSpeeds + 1];
 	
+	//Populating array with base cases
 	for(int i = 1; i <= days; i++){
 		minTests[i][0] = 0;
 		minTests[i][1] = 1;
@@ -68,6 +74,7 @@ public class RunningTrials {
   public int runTrialsBottomUp(int possibleSpeeds, int days) {
 	int[][] minTests = new int[days + 1][possibleSpeeds + 1];
 	
+	//Populating array with base cases
 	for(int i = 1; i <= days; i++){
 		minTests[i][0] = 0;
 		minTests[i][1] = 1;
