@@ -73,28 +73,16 @@ public class HolidaySpecial {
 
 
         for (int cook = 1; cook <= numCooks; cook++){
-          // System.out.print(" cook " + cook);
 
 
           if (signUpTable[cook][step] == 1 ){
             scheduleTable[cook][step] = 1;
-
-                     
-
-          //  makeShifts(cook, numSteps - step, signUpTable);
-           //  System.out.print("Yes");
              break;
 
           }
 
         }
       }
-    //  System.out.println("");
-
-     //
-
-  //  scheduleTable = mostConescutive(numCooks,numSteps, signUpTable);
-
 
     return scheduleTable;
   }
