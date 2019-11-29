@@ -31,67 +31,52 @@ public class HolidaySpecial {
   public int[][] makeShifts( int numCooks, int numSteps,  int[][] signUpTable) {
     // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
     // in the table in the right places based on the return description
-    System.out.print(numSteps);
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
-    // for(int step = 1; step<=numSteps; step++){
-    //   for (int c = 1; c<= numCooks; c++){
-    //     if (scheduleTable[c][step] == 1){
-    //       break;
-    //     }
-  
-    //   int cook = 1;
-    //      while(signUpTable[cook][step] != 1){
-    //     cook++;
-    //   }
-    //    while(signUpTable[cook][step] == 1 && scheduleTable[cook][step] != 1){
-    //     scheduleTable[cook][step] = 1;
-    //   //  step++;
-    //   }
-
-    //   }
-    // }
-     
-
-    
-
-     // makeShifts(numCooks -1, numSteps-1 , signUpTable);
+    int longestCook = getLongestSub(numCooks, numSteps, signUpTable);
+    System.out.println(longestCook);
 
 
-    
-
-    // int cook = mostConescutive(numCooks, numSteps, signUpTable);
-
-
-
-
-
-    // Your code here
-
-    for (int step = 1; step <= numSteps; step++){
-          // System.out.print("step " + step);
-
-
-        for (int cook = 1; cook <= numCooks; cook++){
-
-
-          if (signUpTable[cook][step] == 1 ){
-            scheduleTable[cook][step] = 1;
-             break;
-
-          }
-
-        }
+    for (int step = 1; step<= numSteps; step++){
+      if (signUpTable[longestCook][step] == 1 && (stepIsAssigned(numCooks, step, scheduleTable) != 1)){
+        scheduleTable[longestCook][step] = 1;
       }
 
+    }
+
+
+ 
     return scheduleTable;
   }
 
 
+  public int stepIsAssigned(int numCooks, int step, int[][] schedule){
+    for (int cook = 1; cook<= numCooks; cook++){
+      if (schedule[cook][step] == 1){
+        return 1;
+      }
+    }
+    return 0;
+  }
 
-
-
-
+  public int getLongestSub(int numCooks, int numSteps, int[][] signUp){
+    int currentCook = 1;
+    int longestCook = 1;
+    int cookWithSub = 0;
+      for (int step = 1; step<= numSteps; step++){
+        for (int cook = 1; cook<= numCooks; cook++){
+          if (signUp[cook][step] == 1){
+            currentCook++;
+          }
+          if (currentCook >longestCook){
+          longestCook = currentCook;
+          cookWithSub = cook;
+          }
+        }  
+        
+      }
+    return cookWithSub;
+  }
   /**
    * Makes the convenient lookup table based on the steps each cook says they can do
    * @param numSteps the number of steps in the recipe
