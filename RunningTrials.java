@@ -1,6 +1,6 @@
 /**
  * Running Trials
- * Author: Your Name and Carolyn Yao
+ * Author: Jose Santos (1:40 Class), Jemima Shikdar (3:10 Class) and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -10,11 +10,25 @@ public class RunningTrials {
 	public int runTrialsRecur(int possibleSpeeds, int days) {
 	  int minTests = 0;
 	  // Your code here
-	  int[][] test = new int[possibleSpeeds + 1][days + 1];
 	  
-	  minTests = 
-	  
-	  return minTests;
+	  int N = possibleSpeeds;
+	  int M = days;
+	  if(M == 1) {
+		  return N; //worse case I'll have to do N speed tests
+	  }
+		//1 possible speed to run 
+	  if(N == 0 || N == 1) {
+		  return N; //No other options 
+	  }
+				
+	  int temp = 0;
+	  minTests = Integer.MAX_VALUE;
+	  for(int i = 1; i < N; i++) {
+		  temp = Math.max(runTrialsRecur(i-1, M-1), runTrialsRecur(N-i, M));
+		  minTests = Math.min(minTests, temp);
+	  }
+				
+	  return minTests + 1; 
 	}
 
 	// Optional:
@@ -28,7 +42,13 @@ public class RunningTrials {
 	// Do not change the parameters!
 	public int runTrialsBottomUp(int possibleSpeeds, int days) {
 	  int minTests = 0;
+	  
 	  // Your code here
+	  for(int n = 0; n < possibleSpeeds; n++) {
+		  
+	  }
+	  
+	  
 	  return minTests;
 	}
 
