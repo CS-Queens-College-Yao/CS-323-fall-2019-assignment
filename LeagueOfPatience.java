@@ -51,32 +51,35 @@ public class LeagueOfPatience {
     	processed[v] = false;
     }
 
-    int sTime = (int) (startTime.getTime()/1000 + times[S]);
-
-    times[S] = sTime;
-
+    //Distance of start vertex from itself is always 0
+    times[S] = 0;
+    
     // Find shortest path to T 
     for (int count = 0; count < numVertices - 1 ; count++) {
         // Pick the minimum distance vertex from the set of vertices not yet processed.
         // u is always equal to source in first iteration.
         // Mark u as processed.
         int u = findNextToProcess(times, processed);
-        processed[u] = true;
-
+       
+        // when the picked minimun distantce vertex is the destination
+        // break the loop
         if(u == T) {
         	break;
         }
+        
+        //mark the picked vertex as processed
+        processed[u] = true;
+        
         // Update time value of all the adjacent vertices of the picked vertex.
         for (int v = 0; v < numVertices;  v++) {
-
+        	// find the closest start time
+            Date nextTime = getNextQuestTime(startTime, u, v);
+            // find the wait time b/t arrive time and start time
+            int wait = minutesBetween(startTime, nextTime);
+            
             if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+durations[u][v] < times[v]) {
-                times[v] = times[u] + durations[u][v];
+                times[v] = times[u] + durations[u][v] + wait;
               }
-        	
-        	if(times[v] < durations[u][v]) {
-        		times[v] = times[v]+ durations[u][v]-times[S];
-        	}
-        	
         }
       }
     
