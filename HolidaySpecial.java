@@ -1,7 +1,7 @@
 /**
  * HolidaySpecial
- * Author: Mohebullah Mir and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Mohebullah Mir, Hishaam Ali, akshar patel and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Yes
  */
 
 /**
@@ -38,35 +38,46 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
-   
+    int index=1;
+    int length=0;
+    for(int a=length;a<numSteps;a++){
+   int most_consecutive =0; 
+   //greedy algo takes most consecutive steps starting from first step
+   int optimalCook=0;
     for(int i =1;i<=numCooks;i++){
-      
-       for(int j=1;j<=numSteps;j++){
-        
-         
-        if(j!=numSteps && signUpTable[i][j] ==1 && signUpTable[i][j+1]==1 && colcheck(scheduleTable,numCooks,j)==0)  scheduleTable[i][j]=1;
-        if(j==numSteps && signUpTable[i][j]==1 &&colcheck(scheduleTable,numCooks,j)==0)  scheduleTable[i][j]=1;
-        if(colcheck(signUpTable, numCooks, j)==0 && signUpTable[i][j]==1) scheduleTable[i][j]=1;
-        if(j!=numSteps && signUpTable[i][j]==1 &&colcheck(scheduleTable,numCooks,j)==0 && colcheck(scheduleTable,numCooks,j+1)==1) scheduleTable[i][j]=1;
-         
-  
-          
-    
-  
-      }
+      int consecutive_steps=0;
+       for(int j=index;j<=numSteps;j++){
+         if(signUpTable[i][j]==1){
+           consecutive_steps+=1;//countig consecutive steps
+         }
+         else break; //if steps arent consecutive, go to next cook
+       }
+       //check to see if current consecutive steps are the max
+       if(consecutive_steps>most_consecutive){
+         most_consecutive=consecutive_steps;
+        optimalCook=i;//optimal cook is the one with most consecutive steps
+       }
     }
-  
+      length+=most_consecutive; //the total steps in our optimal solution
+      index=length+1;//index will start where the last optimalcooks' most consecutive steps finished
     
-  
+         for(int b =0;b<=length;b++){
+         //if no cook has taken the job in optimal table then assign job to current optimal cook
+         if(colcheck(scheduleTable, numCooks, b)==0) 
+         scheduleTable[optimalCook][b]= signUpTable[optimalCook][b];
+         }
+    
+    }
+       
     return scheduleTable;
   }
-  public int colcheck(int[][] table, int rows, int col){ 
+  public int colcheck(int[][] table, int rows, int col){ //check to make sure 2 cooks aren't assigned 1 job.
     int val =0;
     for(int i=0;i<rows;i++){
       if (table[i][col] == 1) val=1;
     }
     return val;
-  } //check to make sure 2 cooks aren't assigned 1 job.
+  } 
 
 
   
