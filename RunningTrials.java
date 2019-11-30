@@ -27,6 +27,30 @@ public class RunningTrials {
   public int runTrialsMemoized(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your optional code here
+    minTests = Integer.MAX_VALUE;
+    int trialArray [][] = new int [possibleSpeeds+1][days+1];
+    
+    for (int i=0;i<=possibleSpeeds;i++) {
+    	for (int j=0;j<=days;j++) {
+    		trialArray[i][j] =-1;
+    	}
+    }
+    if (possibleSpeeds==1 ||possibleSpeeds ==0 || days ==1 || days ==0)
+    	return possibleSpeeds;
+    if (trialArray[possibleSpeeds][days] != -1) {
+    	return trialArray[possibleSpeeds][days];
+    }
+ 
+    for (int i=1;i<=possibleSpeeds;i++) {
+    	for (int j=1;j<=days;j++) {
+
+
+    		int max = Math.max(runTrialsRecur(possibleSpeeds-i,days),runTrialsRecur(i-1,days-1));
+    		if (trialArray[i][j] < max )
+    			trialArray[i][j] = max;
+    	}
+    }
+    minTests = trialArray[possibleSpeeds][days];
     return minTests;
   }
 
