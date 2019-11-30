@@ -1,7 +1,8 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
+ * Author: Jian Wei Kang, Senhai Qu, and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
+ * Yes
  */
 
 /**
@@ -29,18 +30,57 @@ public class HolidaySpecial {
    */
 
   public int[][] makeShifts(
-    int numCooks,
-    int numSteps,
-    int[][] signUpTable
-  ) {
-    // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
-    // in the table in the right places based on the return description
-    int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
+            int numCooks,
+            int numSteps,
+            int[][] signUpTable
+    ) {
+        // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
+        // in the table in the right places based on the return description
+        int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
-    // Your code here
+        int indicator=1;
+        int maxStepReached=1;
+        int bestCook=0;
 
-    return scheduleTable;
-  }
+        for(int i=1;i<numSteps + 1;i++){
+            for(int j=1;j<numCooks + 1;j++){
+                if(signUpTable[j][i]==1) {
+
+
+                    if(i==numSteps) {
+                        bestCook=j;
+                        maxStepReached=numSteps;
+
+                    }else
+                    { // (if i != numSteps) if we are not on the last step
+
+                        for(int k=i+1;k<numSteps + 1;k++){
+                            if(signUpTable[j][k] == 1 && signUpTable[j][k-1]==1) {
+                                indicator=k;  //To indicate the number of steps that can be done.
+                            }
+
+                            else { //if there are no more next step.
+                                break;
+                            }
+                        }
+
+                        if(indicator>=maxStepReached) {
+                            bestCook=j;
+                            maxStepReached=indicator;
+                        }
+
+                    }
+                }
+            }
+            for(int m=i;m<maxStepReached+1;m++) {
+                scheduleTable[bestCook][m]=1;
+            }
+            if(maxStepReached>i){
+                i = maxStepReached;
+            }
+        }
+        return scheduleTable;
+    }
 
   /**
    * Makes the convenient lookup table based on the steps each cook says they can do
