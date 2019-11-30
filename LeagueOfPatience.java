@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
+ * Author: Wynnter Ong and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y
  */
 
@@ -76,7 +76,7 @@ public class LeagueOfPatience {
 					int timebetween = minutesBetween(timeAtNode, getNextQuestTime(timeAtNode, u, v));
 					// Finds the minutes between the time at the node, and the next quest time between it and the adjacent node
 					times[v] = times[u] + durations[u][v] + timebetween;
-					// Changes the adjacent node to the time of the past node + duration to travel to it + time between now and when it appears
+					// Changes the adjacent vertex to the time of the past node + duration to travel to it + time between now and when it appears
 					
 				} // end if
 			} // end second for
