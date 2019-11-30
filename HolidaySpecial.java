@@ -29,23 +29,43 @@ public class HolidaySpecial {
    */
 
   public int[][] makeShifts( int numCooks, int numSteps,  int[][] signUpTable) {
-    // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
-    // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
-
-    int longestCook = getLongestSub(numCooks, numSteps, signUpTable);
-    System.out.println(longestCook);
-
-
-    for (int step = 1; step<= numSteps; step++){
-      if (signUpTable[longestCook][step] == 1 && (stepIsAssigned(numCooks, step, scheduleTable) != 1)){
-        scheduleTable[longestCook][step] = 1;
+    // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
+    // in  int temporarySteps = 1;
+    int temporarySteps = 1;
+    while(temporarySteps <= numSteps){
+      int largestSeqEnd = temporarySteps - 1;
+      int cookNumber = 0;
+      for(int i=1;i<=numCooks;i++){
+        int currentSeqEnd;
+        if(signUpTable[i][temporarySteps] == 1){
+          currentSeqEnd = temporarySteps;
+          for(int j=temporarySteps;j<=numSteps;j++){
+            if(j == numSteps){
+              if(currentSeqEnd > largestSeqEnd){
+                cookNumber = i;
+                largestSeqEnd = currentSeqEnd;
+              }
+            }
+            else if(signUpTable[i][j+1] == 0){
+              if(currentSeqEnd > largestSeqEnd){
+                cookNumber = i;
+                largestSeqEnd = currentSeqEnd;
+                break;
+              }
+              else break;
+            }
+            else{
+              currentSeqEnd++;
+            }
+          }
+        }
       }
-
+      for(int i=temporarySteps;i<=largestSeqEnd;i++){
+        scheduleTable[cookNumber][i] = 1;
+      }
+      temporarySteps = largestSeqEnd + 1;
     }
-
-
- 
     return scheduleTable;
   }
 
@@ -60,21 +80,27 @@ public class HolidaySpecial {
   }
 
   public int getLongestSub(int numCooks, int numSteps, int[][] signUp){
-    int currentCook = 1;
-    int longestCook = 1;
+  
+    int longestCook = 0;
     int cookWithSub = 0;
-      for (int step = 1; step<= numSteps; step++){
-        for (int cook = 1; cook<= numCooks; cook++){
+    for (int cook = 1; cook<= numCooks; cook++){
+      int currentCook = 0;
+        for (int step = 1; step<= numSteps; step++){
           if (signUp[cook][step] == 1){
             currentCook++;
+           
           }
           if (currentCook >longestCook){
           longestCook = currentCook;
           cookWithSub = cook;
           }
+          else if (currentCook == longestCook){
+            //find it here
+          }
         }  
         
       }
+     System.out.println("cook" + cookWithSub);
     return cookWithSub;
   }
   /**
