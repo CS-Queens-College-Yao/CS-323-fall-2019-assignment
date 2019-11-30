@@ -32,6 +32,26 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
     // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
     // in  int temporarySteps = 1;
+
+    // Your code here
+    /*
+    *  while steps != last step
+    *   find the longest continuous sequence
+          largestsequence = {};
+    *     for each cook
+    *       for each step
+    *         if next step is not continuous
+    *           if current sequence is larger than the current largest sequence
+    *             update largest
+    *             break
+    *           else
+    *             break
+    *         else if next step is continuous
+    *           add to sequence and move forward to next step.
+    *     update lookup table with largest sequence
+    *     update steps to last step in largest sequence + 1
+    *
+    * */
     int temporarySteps = 1;
     while(temporarySteps <= numSteps){
       int largestSeqEnd = temporarySteps - 1;
@@ -70,39 +90,6 @@ public class HolidaySpecial {
   }
 
 
-  public int stepIsAssigned(int numCooks, int step, int[][] schedule){
-    for (int cook = 1; cook<= numCooks; cook++){
-      if (schedule[cook][step] == 1){
-        return 1;
-      }
-    }
-    return 0;
-  }
-
-  public int getLongestSub(int numCooks, int numSteps, int[][] signUp){
-  
-    int longestCook = 0;
-    int cookWithSub = 0;
-    for (int cook = 1; cook<= numCooks; cook++){
-      int currentCook = 0;
-        for (int step = 1; step<= numSteps; step++){
-          if (signUp[cook][step] == 1){
-            currentCook++;
-           
-          }
-          if (currentCook >longestCook){
-          longestCook = currentCook;
-          cookWithSub = cook;
-          }
-          else if (currentCook == longestCook){
-            //find it here
-          }
-        }  
-        
-      }
-     System.out.println("cook" + cookWithSub);
-    return cookWithSub;
-  }
   /**
    * Makes the convenient lookup table based on the steps each cook says they can do
    * @param numSteps the number of steps in the recipe
