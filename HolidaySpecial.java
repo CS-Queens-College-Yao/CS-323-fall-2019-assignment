@@ -28,14 +28,10 @@ public class HolidaySpecial {
    *     cook X is assigned to step Y in an optimal schedule
    */
 
-  public int[][] makeShifts(
-    int numCooks,
-    int numSteps,
-    int[][] signUpTable
-  ) {
-    // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
-    // in the table in the right places based on the return description
+  public int[][] makeShifts( int numCooks, int numSteps,  int[][] signUpTable) {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
+    // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
+    // in  int temporarySteps = 1;
 
     // Your code here
     /*
@@ -92,6 +88,7 @@ public class HolidaySpecial {
     }
     return scheduleTable;
   }
+
 
   /**
    * Makes the convenient lookup table based on the steps each cook says they can do
@@ -206,11 +203,11 @@ public class HolidaySpecial {
     int[][] cookSignUps1 = {{2, 3, 4, 5, 6}, {5, 7, 8}, {1, 3, 4, 8}, {1, 5, 7, 8}};
     sp.signUpScheduleShifts("Homemade cranberry bread", 4, 8, cookSignUps1);
 
-    // recipe 2: Example 2 from README, 3 cooks, 6 steps:
+    // // // recipe 2: Example 2 from README, 3 cooks, 6 steps:
     int[][] cookSignUps2 = {{2, 3, 4, 5}, {1, 2, 3, 4}, {1, 2, 4, 5, 6}};
     sp.signUpScheduleShifts("Daal", 3, 6, cookSignUps2);
 
-    // recipe 3: 6 cooks, 11 steps
+    // // // recipe 3: 6 cooks, 11 steps
     int[][] cookSignUps3 = {{7, 10, 11}, {2, 3, 4, 5, 7}, {1, 5, 10}, {8, 9, 10}, {5, 6, 7, 8}, {1, 3, 4, 8}};
     sp.signUpScheduleShifts("Seafood Paella", 6, 11, cookSignUps3);
   }
