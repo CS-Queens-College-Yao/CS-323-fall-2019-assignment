@@ -38,7 +38,58 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
-
+    /*
+    *  while steps != last step
+    *   find the longest continuous sequence
+          largestsequence = {};
+    *     for each cook
+    *       for each step
+    *         if next step is not continuous
+    *           if current sequence is larger than the current largest sequence
+    *             update largest
+    *             break
+    *           else
+    *             break
+    *         else if next step is continuous
+    *           add to sequence and move forward to next step.
+    *     update lookup table with largest sequence
+    *     update steps to last step in largest sequence + 1
+    *
+    * */
+    int temporarySteps = 1;
+    while(temporarySteps <= numSteps){
+      int largestSeqEnd = temporarySteps - 1;
+      int cookNumber = 0;
+      for(int i=1;i<=numCooks;i++){
+        int currentSeqEnd;
+        if(signUpTable[i][temporarySteps] == 1){
+          currentSeqEnd = temporarySteps;
+          for(int j=temporarySteps;j<=numSteps;j++){
+            if(j == numSteps){
+              if(currentSeqEnd > largestSeqEnd){
+                cookNumber = i;
+                largestSeqEnd = currentSeqEnd;
+              }
+            }
+            else if(signUpTable[i][j+1] == 0){
+              if(currentSeqEnd > largestSeqEnd){
+                cookNumber = i;
+                largestSeqEnd = currentSeqEnd;
+                break;
+              }
+              else break;
+            }
+            else{
+              currentSeqEnd++;
+            }
+          }
+        }
+      }
+      for(int i=temporarySteps;i<=largestSeqEnd;i++){
+        scheduleTable[cookNumber][i] = 1;
+      }
+      temporarySteps = largestSeqEnd + 1;
+    }
     return scheduleTable;
   }
 
