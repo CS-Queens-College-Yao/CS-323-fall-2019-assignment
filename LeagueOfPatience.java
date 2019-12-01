@@ -27,6 +27,14 @@ public class LeagueOfPatience {
    * @param T the t th location on the game map
    * @param durations durations[u][v] Table of how long game play between u and v takes in minutes
    */
+	
+	/**
+	 * NOTE: I took code from reference below and modified it.
+	 * 
+	 * https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+	 * 
+	 * 
+	 */
   public void myFastestPlay(
     int S,
     int T,
@@ -40,6 +48,29 @@ public class LeagueOfPatience {
     // Feel free to borrow code from any of the existing methods.
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
+    Boolean[] temp = new Boolean [durations.length];
+    Date tempTime;
+    	for(int v=0;v<durations.length;v++) {
+    		times[v]=Integer.MAX_VALUE;
+    		temp[v]=false;
+    	}
+    	times[S]= 0;
+    	for(int j= 0;j<durations.length-1;j++) {
+    		int u = findNextToProcess(times,temp);
+    		temp[u]=true;
+    		for(int v = 0;v<=T;v++) {
+    			tempTime = getNextQuestTime(startTime,u,v);	
+    			if(durations[u][v]!=0) {
+    				durations[u][v]+=(int)((tempTime.getTime()-startTime.getTime())/60000);
+    			}
+    			if(!temp[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+durations[u][v] <times[v]) {
+    				times[v] = times[u] + durations[u][v];
+    				startTime = tempTime;
+    			}
+    		}
+    		
+    	}
+    	
 
     printShortestTimes(times);
 

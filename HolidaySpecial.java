@@ -1,6 +1,6 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
+ * Author: HangBin Zheng and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -38,7 +38,33 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
-
+    int curStep = 1;
+    while(curStep <= numSteps){
+        int maxStep = 0;
+        int Cooks = 1;
+        for(int i = 1; i < numCooks + 1; i++){
+            int temp = 0;
+            for(int j = curStep; j < numSteps + 1; j++){
+                if(signUpTable[i][j] != 1){
+                    break;
+                }else{
+                    temp++;
+                    if(temp > maxStep){
+                        maxStep = temp;
+                        Cooks = i;
+                    }
+                }
+            }
+        }
+        while(maxStep > 0){
+            scheduleTable[Cooks][curStep]=1;
+            curStep++;
+            maxStep--;
+        }
+        
+    }
+    
+    
     return scheduleTable;
   }
 
