@@ -2,6 +2,7 @@
  * Running Trials
  * Author: Jose Santos (1:40 Class), Jemima Shikdar (3:10 Class) and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
+ * Y
  */
 
 public class RunningTrials {
@@ -25,7 +26,7 @@ public class RunningTrials {
 				
 	  int temp = 0;
 	  minTests = Integer.MAX_VALUE;
-	  for(int i = 1; i < N; i++) {
+	  for(int i = 1; i <= N; i++) {
 		  temp = Math.max(runTrialsRecur(i-1, M-1), runTrialsRecur(N-i, M));
 		  minTests = Math.min(minTests, temp);
 	  }
@@ -62,7 +63,7 @@ public class RunningTrials {
 				
 	  int temp = 0;
 	  minTests = Integer.MAX_VALUE;
-	  for(int i = 1; i < N; i++) {
+	  for(int i = 1; i <= N; i++) {
 		  temp = Math.max(runTrialsRecur(i-1, M-1), runTrialsRecur(N-i, M));
 		  minTests = Math.min(minTests, temp);
 	  }
