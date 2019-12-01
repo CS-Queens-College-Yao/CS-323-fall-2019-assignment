@@ -5,10 +5,10 @@
  */
 
 public class RunningTrials {
-
+  static int  [][] storedTests= new int [1000][1000];
   // Do not change the parameters!
   public int runTrialsRecur(int possibleSpeeds, int days) {
-    int minTests = 0;
+  
     int minTests = possibleSpeeds;
 		int fail;
 		int success;
