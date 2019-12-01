@@ -38,7 +38,37 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
+     int current = numSteps;
 
+    while(current>0) {
+    	int maxSteps = 0;
+    	int bestChief =0;
+    	for(int i =0;i<signUpTable.length;i++) {
+    		 if(signUpTable[i][current]==1) {
+  				   int thisChiefStep=1;
+  				   for(int n=current-1;n>=0;n--) {
+  					   if(signUpTable[i][n]==1){
+  						   thisChiefStep+=1;
+  					   }
+  					   else
+  						   break;
+  				   }
+  				   if(thisChiefStep>maxSteps) {
+  					   maxSteps=thisChiefStep;
+  					   bestChief=i;
+  					   }
+  						   
+  				   	}
+  			  
+  				  
+  			   }
+    	int temp = maxSteps;
+    	while(maxSteps>=1) {
+    		scheduleTable[bestChief][current-maxSteps+1]=1;
+    	    maxSteps--;
+    	}
+    	    current-=temp;
+    	}
     return scheduleTable;
   }
 
