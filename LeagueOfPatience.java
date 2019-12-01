@@ -1,11 +1,15 @@
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
+ * Author: Raymond Calapatia, Sukharam Gole and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
+ * Yes
  */
 
 /**
@@ -28,11 +32,12 @@ public class LeagueOfPatience {
    * @param durations durations[u][v] Table of how long game play between u and v takes in minutes
    */
   public void myFastestPlay(
-    int S,
-    int T,
-    Date startTime,
-    int[][] durations
+          int S,
+          int T,
+          Date startTime,
+          int[][] durations
   ) {
+
     int numVertices = durations[0].length;
 
     //This will be the array where we'll store all the getNextTime of each quest.
@@ -88,8 +93,8 @@ public class LeagueOfPatience {
       //   System.out.println(storedTimes[w]);
 
     }
-
     printShortestTimes(times);
+
 
     // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
   }
@@ -107,8 +112,9 @@ public class LeagueOfPatience {
   public Date getNextQuestTime(Date askingTime, int u, int v) {
     int minutesUntilNext = (int) (Math.random() * ((30) + 1) + (v-u));
     Calendar calendar = Calendar.getInstance();
-    calendar.setTime(askingTime);
-    calendar.add(Calendar.MINUTE, minutesUntilNext);
+    calendar.setTime(askingTime);calendar.add(Calendar.MINUTE, minutesUntilNext);
+
+    System.out.println(calendar.getTime());
     return calendar.getTime();
   }
 
@@ -142,7 +148,7 @@ public class LeagueOfPatience {
   public void printShortestTimes(int times[]) {
     System.out.println("Play time to advance to various locations");
     for (int i = 0; i < times.length; i++)
-        System.out.println(i + ": " + times[i] + " minutes");
+      System.out.println(i + ": " + times[i] + " minutes");
   }
 
   /**
@@ -193,12 +199,12 @@ public class LeagueOfPatience {
   public static void main (String[] args) {
     /* duration(e) */
     int playTimeGraph[][] = {
-      {0, 10, 21, 0, 0, 0},
-      {0, 0, 21, 10, 0, 0},
-      {0, 0, 0, 25, 0, 78},
-      {0, 0, 16, 0, 11, 0},
-      {0, 0, 22, 16, 0, 28},
-      {0, 0, 0, 0, 0, 0},
+            {0, 10, 21, 0, 0, 0},
+            {0, 0, 21, 10, 0, 0},
+            {0, 0, 0, 25, 0, 78},
+            {0, 0, 16, 0, 11, 0},
+            {0, 0, 22, 16, 0, 28},
+            {0, 0, 0, 0, 0, 0},
     };
     LeagueOfPatience t = new LeagueOfPatience();
     try {
