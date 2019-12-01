@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
+ * Author: Mohammed Chowdhury, Asad Malik, Nj Lin, Kareem El Sayed and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -33,13 +33,65 @@ public class LeagueOfPatience {
     Date startTime,
     int[][] durations
   ) {
-    int[] times = new int[durations.length];
     // Your code along with comments here. Use the genericShortest function for reference.
     // You want to do similar things as the generic shortest function, except you want
     // to account for the time until the next quest time at each arrival at a location.
     // Feel free to borrow code from any of the existing methods.
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
+    int numVertices = durations.length;
+    
+    		// This is the array where we'll store all the final shortest times
+		int[] times = new int[numVertices];
+
+		// processed[i] will true if vertex i's shortest time is already
+		// finalized
+		Boolean[] processed = new Boolean[numVertices];
+
+		// Initialize all distances as INFINITE and processed[] as false
+		for (int v = 0; v < numVertices; v++) {
+			times[v] = Integer.MAX_VALUE;
+			processed[v] = false;
+		}
+
+		// Distance of source vertex from itself is always 0
+		times[S] = 0;
+		Date tempTime;
+		// Find shortest path to all the vertices
+		for (int count = 0; count < numVertices-1; count++) {
+			// Pick the minimum distance vertex from the set of vertices not yet
+			// processed.
+			// u is always equal to source in first iteration.
+			// Mark u as processed.
+			int u = findNextToProcess(times, processed);
+			processed[u] = true;
+
+			// Update time value of all the adjacent vertices of the picked
+			// vertex.
+			for (int v = 0; v <= T; v++) {
+				// Update time[v] only if is not processed yet, there is an edge
+				// from u to v,
+				// and total weight of path from source to v through u is
+				// smaller than current value of time[v]
+
+				tempTime = getNextQuestTime(startTime, u, v);
+				if (durations[u][v] != 0) {
+					// above mentioned code calculates time difference between
+					// start date and next quest date and converts it into
+					// minutes
+					durations[u][v] += minutesBetween(startTime, tempTime);
+				}
+
+				if (!processed[v] && durations[u][v] != 0
+						&& times[u] != Integer.MAX_VALUE
+						&& times[u] + durations[u][v] < times[v]) {
+					times[v] = times[u] + durations[u][v];
+					// updating the startTime when the player in on the new
+					// vertex
+					startTime = tempTime;
+				}
+			}
+		}
 
     printShortestTimes(times);
 
