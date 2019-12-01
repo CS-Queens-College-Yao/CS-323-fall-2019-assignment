@@ -10,12 +10,12 @@ public class RunningTrials {
     // Do not change the parameters!
     public int runTrialsRecur(int possibleSpeed, int days) {
         int minTests = 0;
-        int min = Integer.MAX_VALUE;     // inilization variable min as Integer.MAX_VALUE = 2147483647
+        int min = Integer.MAX_VALUE;     // initializing variable min as Integer.MAX_VALUE = 2147483647
         // Your code here
-        if (possibleSpeed == 1 || possibleSpeed == 0)    // If there is no speed testing, we don't have any days
-            return possibleSpeed;                       //  if there is 1 speed testing there then we need  at least one day
+        if (possibleSpeed == 1 || possibleSpeed == 0)    // If there is no speed to test, we did not use any days
+            return possibleSpeed;                       //  if we tested at least one speed, we need at least one day
 
-        if (days == 1)               // if we have only 1 days then we have PossibleSpeed times of practising speed test
+        if (days == 1)               // if we have only 1 day then we have x amount of PossibleSpeed to test on that day.
             return possibleSpeed;
 
         for (int i = 1; i <= possibleSpeed; i++) {
@@ -29,7 +29,7 @@ public class RunningTrials {
 
   // Optional:test
   // Pick whatever parameters you want to, just make sure to return an int.
-  public int runTrialsMemoized(int possibleSpeeds, int days) {
+  public int runTrialsMemoized() {
     int minTests = 0;
     // Your optional code here
     return minTests;
