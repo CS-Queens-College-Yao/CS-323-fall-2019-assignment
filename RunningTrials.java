@@ -33,8 +33,9 @@ public class RunningTrials {
 // Optional:
   // Pick whatever parameters you want to, just make sure to return an int.
   public int runTrialsMemoized(int possibleSpeeds, int days) {
-	int[][] memo = new int[possibleSpeeds+1][days+1];
-    int minTests = 0;
+	
+	  int[][] memo = new int[possibleSpeeds+1][days+1];
+	  int minTests = 0;
     
     // Your optional code here
     
@@ -103,8 +104,8 @@ public class RunningTrials {
       int minTrials1Bottom = running.runTrialsBottomUp(12, 5);
       int minTrials2Recur = running.runTrialsRecur(20, 8);
       int minTrials2Bottom = running.runTrialsBottomUp(20, 8);
-      int minTrials2Memo = running.runTrialsMemoized(20, 8);
+
       System.out.println("12 speeds, 5 days: " + minTrials1Recur + " " + minTrials1Bottom);
-      System.out.println("20 speeds, 8 days: " + minTrials2Recur + " " + minTrials2Bottom + " " + minTrials2Memo);
+      System.out.println("20 speeds, 8 days: " + minTrials2Recur + " " + minTrials2Bottom);
   }
 }
