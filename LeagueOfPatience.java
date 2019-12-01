@@ -382,7 +382,7 @@ public class LeagueOfPatience {
 
     };
 
-    t t = new t();
+    LeagueOfPatience t = new LeagueOfPatience();
 
     try {
 
