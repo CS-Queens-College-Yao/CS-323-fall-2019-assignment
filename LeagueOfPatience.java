@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
+ * Author: Joyce Tan and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -33,17 +33,95 @@ public class LeagueOfPatience {
     Date startTime,
     int[][] durations
   ) {
-    int[] times = new int[durations.length];
-    // Your code along with comments here. Use the genericShortest function for reference.
-    // You want to do similar things as the generic shortest function, except you want
-    // to account for the time until the next quest time at each arrival at a location.
-    // Feel free to borrow code from any of the existing methods.
-    // You will find the getNextQuestTime method and the minutesBetween method helpful.
-    // You can also make new helper methods.
+    // This is the array where we'll store all the final shortest times
+    int[] times = new int[T+1];
+
+    // processed[i] will true if vertex i's shortest time is already finalized
+    Boolean[] processed = new Boolean[T+1];
+    
+    // previousLocation[v] will store the previous location of location v from the shortest path
+    int[] previousLocation = new int[T+1];
+
+    // Initialize all distances as INFINITE and processed[] as false and all previous locations to the location itself
+    for (int v = 0; v <= T; v++) {
+      times[v] = Integer.MAX_VALUE;
+      previousLocation[v] = v;
+      processed[v] = false;
+    }
+
+    // Distance of source vertex from itself is always 0
+    times[S] = 0;
+
+    // Find shortest path to all the vertices
+    for (int count = 0; count <= T ; count++) {
+      // Pick the minimum distance vertex from the set of vertices not yet processed.
+      // u is always equal to source in first iteration.
+      // Mark u as processed.
+      int u = findNextToProcess(times, processed);
+      processed[u] = true;
+
+      // Initialize askingTime, nextTime as startTime and nextTimeMins, waitingTime as 0
+      Date askingTime = startTime;
+      Date nextTime = startTime;
+      int nextTimeMins = 0;
+      int waitingTime = 0;
+
+      // Update time value of all the adjacent vertices of the picked vertex.
+      for (int v = 0; v <= T; v++) {
+        // Update time[v] only if is not processed yet, there is an edge from u to v, the waitingTime is  
+        // greater than zero and total weight of path from source to v through u plus the waiting time for 
+        // the nextQuestTime(in minutes) is smaller than current value of time[v]
+        // calculate the next quest start time
+        // calculate the difference in mins of the asking time and the next quest start time
+        // the next quest start time becomes the next asking time 
+        // waitingTime = (how much time you have to complete the game play before the next quest time) - (how long the game play takes)
+        // waitingTime greater than 0 means you are able to complete the game time before the next 
+        // quest time starts and you have to wait the additional time to start the next quest 
+        // update previous location of v = u 
+        if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE){
+        nextTime = getNextQuestTime(askingTime,u,v);
+        nextTimeMins = minutesBetween(askingTime,nextTime);
+        askingTime = nextTime;
+        waitingTime = nextTimeMins - durations[u][v];
+          if (waitingTime >= 0 && times[u] + nextTimeMins < times[v]) {
+            times[v] = times[u] + nextTimeMins;
+            previousLocation[v] = u;
+            // code used to check calculations and path, every time shortest path is updated
+            // System.out.println("times[] and path for count=" + count + " u=" + u + " v=" + v + " nextTimeMins=" + nextTimeMins + ":");
+            // for (int i = 0; i < times.length; i++)
+            // System.out.println(i + ": " + times[i] + " minutes, path to " + i + ": "+ previousLocation[i] + "-->" + i);  
+            
+          }
+        }
+      }
+    }
 
     printShortestTimes(times);
 
     // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
+    
+    // this array will store the suggested play path
+    int[] playPath = new int[T+1];
+    
+    // playPath starts at location T and keeps storing the previous location of location i 
+    // until it reaches location S to get the suggested play path
+    playPath[0] = T;
+    int p = previousLocation[T];
+    int pathLength = 1;
+    for(int i = 1; i <= T; i++){
+        if(p == S) break;
+        playPath[i] = p;
+        p = previousLocation[p];
+        pathLength++;
+    }
+    playPath[pathLength] = S;
+    
+    // Print suggested play path from location S to location T 
+    System.out.println("Suggested play path online wait time accounted for:");
+    for(int j = pathLength; j >= 1; j--)
+        System.out.print(playPath[j] + ",");
+    System.out.print(playPath[0]);
+    
   }
 
   /**
