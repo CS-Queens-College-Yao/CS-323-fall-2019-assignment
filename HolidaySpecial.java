@@ -1,3 +1,5 @@
+import java.util.*; 
+
 /**
  * HolidaySpecial
  * Author: Your Name and Carolyn Yao
@@ -40,34 +42,45 @@ public int[][] makeShifts(
 		//find the cook with most consecutive # of steps	
 		//code based on MaxRepeatingBruteForce.java
 
-//		for(int i = 1; i <= numSteps; i++) {
-	
+		boolean[] scheduled = new boolean[numSteps+1];
+		Arrays.fill(scheduled, Boolean.FALSE);
+
+		for(int i = 1; i <= numSteps; i++) {
+				
+			while(!scheduled[i]) {
+			
 				int maxCount = 0;
 				int curCook = 0;
 
 				for(int cook = 1; cook <= numCooks ; cook++) {
 					int count = 1;
-					for(int step = 1; step <= numSteps ; step++) {			
-						if(signUpTable[cook][step] == 1) {
-							count++;
-						}
+					for(int step = 1; step <= numSteps ; step++) {		
+						//case 1, if the step is scheduled
+						if(scheduled[step] == true) {
+							continue;
+						}else {
+						
+							if(signUpTable[cook][step] == 1) {
+								count++;
+							}
+						}		
 					}
-    	
+					
 					if(maxCount < count) {
 						maxCount = count;
 						curCook = cook;
 					}
+					
 				}
-
+				
 				for (int k = 1; k <= numSteps; k++) {
-					if (signUpTable[curCook][k] == 1 ) {
+					if (signUpTable[curCook][k] == 1 && scheduled[k] == false) {
 						scheduleTable[curCook][k] = 1;	
-					}else {
-						//move to the next cook who can do most consecutive steps for the rest steps(signed up to)
+						scheduled[k] = true;
 					}
 				}
-			
-//		}  
+			}
+		}
     	return scheduleTable;
   }
 
