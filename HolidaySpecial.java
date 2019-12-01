@@ -58,7 +58,7 @@ public class HolidaySpecial {
       count=0; //reset count to 0 for another new recipe.
     }
 
-    System.out.println(Arrays.toString(arrayOfSteps)); //this is helpful to see which index which cook can do the most steps.
+    //System.out.println(Arrays.toString(arrayOfSteps)); //this is helpful to see which index which cook can do the most steps.
 
 
     for (int x = 0; x < arrayOfSteps.length; x++)// this loop is looking for the index on which cook can do the most step.
