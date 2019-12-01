@@ -109,7 +109,7 @@ public class  RunningTrials{
 
   public static void main(String args[]){
 
-      t2 running = new t2();
+      RunningTrials running = new RunningTrials();
 
 
 
