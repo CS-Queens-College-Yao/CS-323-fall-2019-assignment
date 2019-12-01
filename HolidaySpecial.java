@@ -1,8 +1,11 @@
 /**
  * HolidaySpecial
  * Author: Raymond Calapatia, Sukharam Gole and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N Yes
+ * Does this compile or finish running within 5 seconds? Y/N
+ * Yes
  */
+
+import java.util.Arrays;
 
 /**
  * This class implements a scheduler to assign cooks to steps in a special
@@ -39,16 +42,76 @@ public class HolidaySpecial {
 
     // Your code here
     scheduleTable=signUpTable;
+    int count=0; //Initialize count that counts the number of steps a cook can do
+    int[] arrayOfSteps = new int [numCooks+1]; //an array that stores how many steps a cook can do
+    int maxStep=0;
+    int index=0;//intialize the index where the maximum step is in arrayOfSteps.
 
-    for(int i =1; i<numCooks+1;i++){
-      for(int j = 1; j<numSteps+1;j++){
-        for(int f = i; f<numCooks;f++) {
-          if (scheduleTable[i][j] == scheduleTable[f + 1][j]) {
-            scheduleTable[f + 1][j] = 0;
+    for(int i =1; i<numCooks+1;i++){      //loops through all the cooks
+      for(int j = 1; j<numSteps+1;j++){// loops through all the steps.
+        if(scheduleTable[i][j]==1){ // if scheduleTable[i][j]==1 a cook can do a step
+          count++;                //increment count if a cook can do a step
+          arrayOfSteps[i]=count;// store the total amount of count into the arrayOfSteps.
+          maxStep=arrayOfSteps[0]; // initilize the maximum step a cook can do to index 0 of arrayOfSteps.
+        }
+      }
+      count=0; //reset count to 0 for another new recipe.
+    }
+
+    System.out.println(Arrays.toString(arrayOfSteps)); //this is helpful to see which index which cook can do the most steps.
+
+
+    for (int x = 0; x < arrayOfSteps.length; x++)// this loop is looking for the index on which cook can do the most step.
+    {
+      if (maxStep< arrayOfSteps[x])
+      {
+        maxStep = arrayOfSteps[x];
+        index = x;
+      }
+    }
+
+    if(index==1){//condition if the most step is in index 1 of arrayOfSteps.
+      for(int i =1; i<numCooks+1;i++){
+        for(int j = 1; j<numSteps+1;j++){
+          for(int f = i; f<numCooks;f++) {
+            if (scheduleTable[i][j] == scheduleTable[f + 1][j]) {
+              scheduleTable[f + 1][j] = 0;
+            }
           }
         }
       }
     }
+    if(index==numCooks){ //condition if the most step is in the last index of arrayOfSteps.
+      for(int i =index; i>0;i--){
+        for(int j = 1; j<numSteps+1;j++){
+          for(int f = i; f>0;f--) {
+
+            if (scheduleTable[i][j] == scheduleTable[f - 1][j]) {
+              scheduleTable[f - 1][j] = 0;
+            }
+
+          }
+        }
+      }
+
+    }
+    else{ //condition if the most step is in the middle of the arrayOfStep. At this point we realized finding the most step a cook can do IS NOT the most optimal way.
+      for(int i =index; i<numCooks+1;i++){
+        for(int j = 1; j<numSteps+1;j++){
+          for(int f = i; f<numCooks;f++) {
+            if (scheduleTable[i][j] == scheduleTable[f + 1][j]) {
+              scheduleTable[f + 1][j] = 0;
+            }
+            if(scheduleTable[index-1][j]==1 && scheduleTable[f][j]==1){
+              scheduleTable[f][j]=0;
+            }
+          }
+
+        }
+      }
+
+    }
+
 
     return scheduleTable;
   }

@@ -33,11 +33,20 @@ public class LeagueOfPatience {
     Date startTime,
     int[][] durations
   ) {
-    int[] times = new int[durations.length];
     int numVertices = durations[0].length;
+
+    //This will be the array where we'll store all the getNextTime of each quest.
     Date [] storedTimes = new Date[durations.length];
     storedTimes[0]=startTime;
+
+    //This will be the array where we'll store the difference in minutes between the end time of the previous quest
+    //to the time when you can get the next quest.
     int [] intermission = new int [durations.length];
+
+
+    // This is the array where we'll store all the final shortest times
+    int[] times = new int[durations.length];
+
     // processed[i] will true if vertex i's shortest time is already finalized
     Boolean[] processed = new Boolean[numVertices];
 
@@ -64,37 +73,21 @@ public class LeagueOfPatience {
         // and total weight of path from source to v through u is smaller than current value of time[v]
         if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+durations[u][v] < times[v]) {
           times[v] = times[u] + durations[u][v];
+          //storing the time of when you can receive the next quest into the array of storedTime.
           storedTimes[v]=getNextQuestTime(storedTimes[v-1],u,v);
+          //storing the minutes between the time you can receive the next quest and the endtime of the previous quest.
           intermission[v]= minutesBetween(storedTimes[v-1],storedTimes[v]);
         }
 
       }
     }
 
-
-
-    //minutesBetween(newTime,startTime);
-    //String sDate1=newTime;
-    //Date date1=null;
-    //try {
-    //   date1 = new SimpleDateFormat("hh:mm").parse(newTime);
-    //} catch (ParseException e) {
-    //  e.printStackTrace();
-    //}
-    // System.out.println(date1);
-
-
+    //outputting the total time of doing all the quest.
     for(int w = 1; w<durations.length;w++){
       times[w]=times[w-1]+(times[w]+(intermission[w]/60));
       //   System.out.println(storedTimes[w]);
 
     }
-    // Your code along with comments here. Use the genericShortest function for reference.
-    // You want to do similar things as the generic shortest function, except you want
-    // to account for the time until the next quest time at each arrival at a location.
-    // Feel free to borrow code from any of the existing methods.
-    // You will find the getNextQuestTime method and the minutesBetween method helpful.
-    // You can also make new helper methods.
 
     printShortestTimes(times);
 
