@@ -39,6 +39,32 @@ public class RunningTrials {
   public int runTrialsBottomUp(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
+      int[][] runTrialsBottomUp = new int[days + 1][possibleSpeeds + 1];
+
+      // Base Case 1:  if there is no speed to be tested there is no days used.
+      // If there is at least 1 speed to be tested, the athlete needs at least one day.
+
+      for (int i = 1; i <= days; i++) {
+          runTrialsBottomUp[i][0] = 0;
+          runTrialsBottomUp[i][1] = 1;
+      }
+      // Base case 2 : If the athlete has only one day to practice, the athlete will try to test all the possible speeds.
+
+      for (int j = 1; j <= possibleSpeeds; j++) {
+          runTrialsBottomUp[1][j] = j;
+      }
+      // Third condition for filling entire table using optimal substructure
+      for (int i = 2; i <= days; i++) {
+          for (int j = 2; j <= possibleSpeeds; j++) {
+              runTrialsBottomUp[i][j] = Integer.MAX_VALUE;
+              int Result;
+              for (int k = 1; k <= j; k++) {
+                  Result = 1 + Math.max(runTrialsBottomUp[i - 1][k - 1], runTrialsBottomUp[i][j - k]);
+                  runTrialsBottomUp[i][j] = Math.min(Result, runTrialsBottomUp[i][j]);
+                  minTests= runTrialsBottomUp[i][j];
+              }
+          }
+      }
     return minTests;
   }
 
