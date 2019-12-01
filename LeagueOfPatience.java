@@ -1,168 +1,130 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Calendar;
-
 /**
- * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
+
+ * Running Trials
+
+ * Author: Senhai Qu, JianWei Kang and Carolyn Yao
+
  * Does this compile or finish running within 5 seconds? Y/N
+
  */
 
-/**
- * This class contains solutions to the League of Patience problem in the
- * myFastestPlay method. There is an existing implementation of a
- * shortest-paths algorithm. As it is, you can run this class and get the solutions
- * from the existing shortest-path algorithm.
- */
+
 
 public class LeagueOfPatience {
 
-  /**
-   * The algorithm that could solve for shortest play time between location S
-   * to T. It combines the given edge information about actual play time with the
-   * time required to wait for each intermediary quest to become available.
-   *
-   * @param startTime the time you intend to start playing
-   * @param S the s th location on the game map
-   * @param T the t th location on the game map
-   * @param durations durations[u][v] Table of how long game play between u and v takes in minutes
-   */
-  public void myFastestPlay(
-    int S,
-    int T,
-    Date startTime,
-    int[][] durations
-  ) {
-    int[] times = new int[durations.length];
-    // Your code along with comments here. Use the genericShortest function for reference.
-    // You want to do similar things as the generic shortest function, except you want
-    // to account for the time until the next quest time at each arrival at a location.
-    // Feel free to borrow code from any of the existing methods.
-    // You will find the getNextQuestTime method and the minutesBetween method helpful.
-    // You can also make new helper methods.
 
-    printShortestTimes(times);
 
-    // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
+  // Do not change the parameters!
+
+  public int runTrialsRecur(int possibleSpeeds, int days) {
+
+      int minTests = 0;
+      //if only one day
+      if(days==1) return possibleSpeeds;
+      //if  possibleSpeeds<=2 
+      else if(possibleSpeeds==2||possibleSpeeds==1) return possibleSpeeds;
+      //otherwise call function recursively 
+      else {
+     	return runTrialsRecur(possibleSpeeds-2,days-1)+1;
+
+    // Your code here
+
+    	}
+
   }
 
-  /**
-   * This function is simulating the game's API that you can request the closest
-   * quest start time from. For example, if you enter that you will get to the
-   * quest at 13:45, it could give back something like 16:02 (Date object)
-   * as the next quest time.
-   * @param askingTime the time at which the user needs to know when the next quest is
-   * @param u Look up quest starting point
-   * @param v Look up quest endpoint
-   * @return the next quest time as a Date object
-   */
-  public Date getNextQuestTime(Date askingTime, int u, int v) {
-    int minutesUntilNext = (int) (Math.random() * ((30) + 1) + (v-u));
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTime(askingTime);
-    calendar.add(Calendar.MINUTE, minutesUntilNext);
-    return calendar.getTime();
-  }
 
-  /**
-   * This finds the minute difference between two time (Date) objects.
-   */
-  public int minutesBetween(Date time1, Date time2) {
-    return (int) (time2.getTime() - time1.getTime()) / 1000;
-  }
 
-  /**
-   * Finds the vertex with the minimum time from the source that has not been
-   * processed yet.
-   * @param times The shortest times from the source
-   * @param processed boolean array tells you which vertices have been fully processed
-   * @return the index of the vertex that is next vertex to process
-   */
-  public int findNextToProcess(int[] times, Boolean[] processed) {
-    int min = Integer.MAX_VALUE;
-    int minIndex = -1;
+  // Optional:
 
-    for (int i = 0; i < times.length; i++) {
-      if (processed[i] == false && times[i] <= min) {
-        min = times[i];
-        minIndex = i;
-      }
-    }
-    return minIndex;
-  }
+  // Pick whatever parameters you want to, just make sure to return an int.
 
-  public void printShortestTimes(int times[]) {
-    System.out.println("Play time to advance to various locations");
-    for (int i = 0; i < times.length; i++)
-        System.out.println(i + ": " + times[i] + " minutes");
-  }
+  public int runTrialsMemoized(int possibleSpeeds,int days) {
 
-  /**
-   * Given an adjacency matrix of a graph, implements
-   * @param graph The connected, directed graph in an adjacency matrix where
-   *              if graph[i][j] != 0 there is an edge with the weight graph[i][j]
-   * @param source The starting vertex
-   */
-  public void genericShortest(int graph[][], int source) {
-    int numVertices = graph[0].length;
-
-    // This is the array where we'll store all the final shortest times
-    int[] times = new int[numVertices];
-
-    // processed[i] will true if vertex i's shortest time is already finalized
-    Boolean[] processed = new Boolean[numVertices];
-
-    // Initialize all distances as INFINITE and processed[] as false
-    for (int v = 0; v < numVertices; v++) {
-      times[v] = Integer.MAX_VALUE;
-      processed[v] = false;
+    int minTests = 0;
+    //create a array store result
+    int a[][]=new int[possibleSpeeds+1][days+1];
+    for(int i=1;i<possibleSpeeds+1;i++)
+    	for(int j=1;j<days+1;j++)
+    		a[i][j]=-1;
+    
+    //if array exit a request result where days=1, return it
+    if(days==1) return a[possibleSpeeds][1]=possibleSpeeds;
+    //if possibleSpeeds<=2 return it and update array value
+    else if(possibleSpeeds==2||possibleSpeeds==1) return a[possibleSpeeds][days]=possibleSpeeds;
+    
+    else {
+    	//if a request exit, return it
+    	if( a[possibleSpeeds][days]!=-1)
+    		return  a[possibleSpeeds][days];
+    	//if a request doesn't exit , update array, then return it
+    	else a[possibleSpeeds][days]=runTrialsRecur(possibleSpeeds-2,days-1)+1;
+    	    return a[possibleSpeeds][days];
     }
 
-    // Distance of source vertex from itself is always 0
-    times[source] = 0;
 
-    // Find shortest path to all the vertices
-    for (int count = 0; count < numVertices - 1 ; count++) {
-      // Pick the minimum distance vertex from the set of vertices not yet processed.
-      // u is always equal to source in first iteration.
-      // Mark u as processed.
-      int u = findNextToProcess(times, processed);
-      processed[u] = true;
+    // Your optional code here
 
-      // Update time value of all the adjacent vertices of the picked vertex.
-      for (int v = 0; v < numVertices; v++) {
-        // Update time[v] only if is not processed yet, there is an edge from u to v,
-        // and total weight of path from source to v through u is smaller than current value of time[v]
-        if (!processed[v] && graph[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+graph[u][v] < times[v]) {
-          times[v] = times[u] + graph[u][v];
-        }
-      }
-    }
 
-    printShortestTimes(times);
+    
   }
 
-  public static void main (String[] args) {
-    /* duration(e) */
-    int playTimeGraph[][] = {
-      {0, 10, 21, 0, 0, 0},
-      {0, 0, 21, 10, 0, 0},
-      {0, 0, 0, 25, 0, 78},
-      {0, 0, 16, 0, 11, 0},
-      {0, 0, 22, 16, 0, 28},
-      {0, 0, 0, 0, 0, 0},
-    };
-    LeagueOfPatience t = new LeagueOfPatience();
-    try {
-      Date date = new SimpleDateFormat("hh:mm").parse("14:45");
-      System.out.println("Online wait time NOT accounted for: ");
-      t.genericShortest(playTimeGraph, 0);
-      System.out.println("Online wait time accounted for: ");
-      t.myFastestPlay(0, 5, date, playTimeGraph);
-    } catch (Exception e) {
-      System.out.println(e.toString());
-    }
 
-    // You can create a test case for your implemented method for extra credit below
+
+  // Do not change the parameters!
+
+  public int runTrialsBottomUp(int possibleSpeeds, int days) {
+
+    int minTests = 0;
+    //if days==1 return possibleSpeeds
+    if(days==1)   minTests=possibleSpeeds;
+    else {
+    	//count down days and speeds
+    	while(days>1&&possibleSpeeds>0) {
+    		possibleSpeeds=possibleSpeeds-2;
+    		minTests++;
+    		days--;
+       }
+    	//if possibleSpeed=0 need one more test after minTests
+       if(possibleSpeeds==0) return minTests+1;
+       // if possibleSpeed=-1 return minTests
+       else if(possibleSpeeds==-1) return minTests;
+       // if day==1 
+       else return minTests+possibleSpeeds;
+       	
+    }	
+    // Your code here
+
+    return minTests;
+
   }
+
+
+
+  public static void main(String args[]){
+
+      t2 running = new t2();
+
+
+
+      // Do not touch the below lines of code, your output will automatically be formatted
+
+      int minTrials1Recur = running.runTrialsRecur(12, 5);
+
+      int minTrials1Bottom = running.runTrialsBottomUp(12, 5);
+
+      int minTrials2Recur = running.runTrialsRecur(20, 8);
+
+      int minTrials2Bottom = running.runTrialsBottomUp(20, 8);
+      
+
+      System.out.println("12 speeds, 5 weeks: " + minTrials1Recur + " " + minTrials1Bottom);
+
+      System.out.println("20 speeds, 8 weeks: " + minTrials2Recur + " " + minTrials2Bottom); 
+      
+      System.out.println("20 speeds, 8 weeks: " + running.runTrialsMemoized(12, 5) + " " + running.runTrialsMemoized(20, 8)); 
+      
+
+  }
+
 }
