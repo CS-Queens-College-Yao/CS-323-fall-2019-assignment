@@ -42,6 +42,10 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
+    numCooks = 10;
+    signUpTable = new int [10][10];
+    for(int i = 0; i < numCooks; i++)
+    	signUpTabe[i][i] = i;
 
     return scheduleTable;
   }
