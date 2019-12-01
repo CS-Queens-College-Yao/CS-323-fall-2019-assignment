@@ -38,10 +38,11 @@ public class RunningTrials {
       {
           int belowSpeedMaxTest = runTrialsRecur(speedIndex-1, days-1);
           int aboveSpeedMaxTest = runTrialsRecur(possibleSpeeds-speedIndex, days);
-
+           
+          //Compare above and below speeds and get max speed.
           int maxTestAtSpeedIndex = Math.max(belowSpeedMaxTest, aboveSpeedMaxTest);
 
-          //Choosing worst case from all of speedIndexes.
+          //Choosing worst case(minimum testruns) from all of speedIndexes.
           if (minTests == 0 || minTests > maxTestAtSpeedIndex)
           {
               minTests = maxTestAtSpeedIndex;
@@ -65,14 +66,15 @@ public class RunningTrials {
   // Do not change the parameters!
   public int runTrialsBottomUp(int possibleSpeeds, int days) {
 //    int minTests = 0;
-
+      
+      
       int memoizeArr [][] = new int [possibleSpeeds + 1][days + 1];
 
       //In case of only one day, trials are num of speeds.
       for (int eachSpeed = 0; eachSpeed <= days; eachSpeed++) {
           memoizeArr[eachSpeed][1] = eachSpeed;
       }
-
+      //In case of Days below and equal 2 memoize for that speed for trials.
       for (int eachDay = 1; eachDay <= days; eachDay++) {
           memoizeArr[0][eachDay] = 0;
           memoizeArr[1][eachDay] = 1;
@@ -83,7 +85,9 @@ public class RunningTrials {
           for (int eachSpeed = 3; eachSpeed <= possibleSpeeds; eachSpeed++) {
               int minTrials = -1;
               for (int x=1; x <= eachSpeed; x++) {
+                  //Compare and get maximum speed test
                   int maxSpeedTestAtIndex = 1 + Math.max(memoizeArr[x-1][eachDay-1], memoizeArr[eachSpeed-x][eachDay]);
+                  //Storing minimum trials to 2Darray.
                   if (minTrials == -1 || minTrials > maxSpeedTestAtIndex) {
                       minTrials = maxSpeedTestAtIndex;
                       memoizeArr[eachSpeed][eachDay] = minTrials;
