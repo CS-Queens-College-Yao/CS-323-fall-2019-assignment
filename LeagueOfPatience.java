@@ -44,7 +44,7 @@ public class LeagueOfPatience {
 
     int numVertices = durations[0].length; 
     Boolean[] processed = new Boolean[numVertices];
-    
+   
     // Initialize all distances as INFINITE and processed[] as false
     for(int v = 0; v < numVertices; v++) {
     	times[v] = Integer.MAX_VALUE; 
@@ -55,13 +55,13 @@ public class LeagueOfPatience {
     times[S] = 0;
     
     // Find shortest path to T 
-    for (int count = 0; count < numVertices - 1 ; count++) {
+    for (int count = 0; count <  numVertices - 1 ; count++) {
         // Pick the minimum distance vertex from the set of vertices not yet processed.
         // u is always equal to source in first iteration.
         // Mark u as processed.
         int u = findNextToProcess(times, processed);
        
-        // when the picked minimun distantce vertex is the destination
+        // when the picked minimum distantce vertex is the destination
         // break the loop
         if(u == T) {
         	break;
@@ -72,13 +72,18 @@ public class LeagueOfPatience {
         
         // Update time value of all the adjacent vertices of the picked vertex.
         for (int v = 0; v < numVertices;  v++) {
-        	// find the closest start time
+        	// find the closest start time of next quest
             Date nextTime = getNextQuestTime(startTime, u, v);
-            // find the wait time b/t arrive time and start time
+            // find the wait time b/t arrive time and start time of next quest
             int wait = minutesBetween(startTime, nextTime);
+
             
-            if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+durations[u][v] < times[v]) {
-                times[v] = times[u] + durations[u][v] + wait;
+            if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE 
+            		&& times[u] + durations[u][v]+ wait < times[v]) {
+            		times[v] = times[u] + durations[u][v] + wait;
+            		//update starTime
+            		startTime = nextTime;
+            	
               }
         }
       }
