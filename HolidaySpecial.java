@@ -1,7 +1,7 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Jose Rivas and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y/N YES: but incorrect output
  */
 
 /**
@@ -38,6 +38,13 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
+    for (int i = 1; i <= numCooks; i++) {
+        for (int j = 0; j <= numSteps; j++) {
+          if(signUpTable[i][j] == 1 && scheduleTable[i][j] == 0)
+        	  scheduleTable[i][j] = 1;
+          
+        }
+    }
 
     return scheduleTable;
   }

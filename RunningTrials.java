@@ -1,7 +1,9 @@
 /**
  * Running Trials
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Jose Rivas and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y/N 
+ * YES: but incorrect output
+ *
  */
 
 public class RunningTrials {
@@ -10,7 +12,18 @@ public class RunningTrials {
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
-    return minTests;
+   
+    
+   //cases
+    if(days == 1) {
+    	possibleSpeeds--;
+    	return ++minTests;
+    }
+    else { 
+     ++minTests;
+     return runTrialsRecur(possibleSpeeds - 1, days - 1);
+    }
+   
   }
 
   // Optional:
@@ -25,6 +38,26 @@ public class RunningTrials {
   public int runTrialsBottomUp(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
+    
+ 
+    
+    // define the range 
+    int max = 10; 
+    int min = 1; 
+    int range = max - min + 1;
+    
+    while(days >= 1) {
+    //generate random number to see if athlete injure at a particular speed.
+    //while athlete stills have days left to practice.
+    int rand = (int)(Math.random() * range) + min;
+    if(rand <= 8) {
+    	minTests++;
+    	possibleSpeeds--;
+    }
+    else
+    	break;
+    days--;	
+    }
     return minTests;
   }
 
