@@ -1,31 +1,59 @@
 /**
  * Running Trials
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Mohebullah Mir and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? exactly 5 seconds
  */
 
 public class RunningTrials {
-
+   
+   public int injured(){ //determines if athlete will be injured 
+     if (Math.random()<=0.10){ //10% chance at all speeds
+       return 1; 
+     }
+     else return 0;
+   }
   // Do not change the parameters!
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
-    // Your code here
+    if (possibleSpeeds==0) return 0;
+    if (days==1 && injured()==1) return 0;
+    if(days>1 && injured()==1) minTests= runTrialsRecur(possibleSpeeds-1, days-1)+0; //if injured and more days left to train, then runtrials for next day with less possible speeds
+    minTests= runTrialsRecur( possibleSpeeds-1, days)+1; // if not injured, then add 1 to mintests
+    
     return minTests;
   }
 
   // Optional:
   // Pick whatever parameters you want to, just make sure to return an int.
-  public int runTrialsMemoized() {
+  public int[][] grid = new int[20][10];
+  public int runTrialsMemoized(int possibleSpeeds, int days) {
     int minTests = 0;
+    
     // Your optional code here
     return minTests;
   }
-
+  public int max(int a, int b){
+    if (a > b) return a;
+    else return b; 
+  }
+  
   // Do not change the parameters!
   public int runTrialsBottomUp(int possibleSpeeds, int days) {
     int minTests = 0;
+    int[][] table= new int[possibleSpeeds][days]; //2d table to store mintests at possible speeds and days
+    for( int i=1;i<possibleSpeeds;i++){
+      for(int j=1;j<days;j++){
+        table[0][0]=0;
+        table[0][j]=0; //boundary condition
+        table[i][0] =0;
+        if(injured() == 0){ table[i][j] = max(table[i-1][j],table[i-1][j-1])+1;} //if not injured, then add 1 test to max of previous speed on same day and previous speed on different day
+        else table[i][j] = max(table[i-1][j],table[i-1][j-1]); 
+        if (table[i][j] > minTests) minTests=table[i][j]; //mintests will be greatest value from last row
+      }
+    }
+    
     // Your code here
-    return minTests;
+    return minTests; // return maximum from last row
   }
 
   public static void main(String args[]){
