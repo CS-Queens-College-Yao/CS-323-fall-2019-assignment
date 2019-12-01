@@ -10,7 +10,7 @@ public class RunningTrials {
   public int runTrialsRecur(int possibleSpeeds, int days) {
 	  	int minTests = 0;
 
-	  	// Our code here
+	  	// code here
 	  	
 	  	if(possibleSpeeds <= 1)		// If there is less than 1 possible speeds, only 1 test required
 	        return days;
