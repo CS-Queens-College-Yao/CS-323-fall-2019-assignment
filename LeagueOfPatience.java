@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author:Mohebullah Mir and Carolyn Yao
+ * Author: Mohebullah Mir, Hishaam Ali, Akshar Patel and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -34,12 +34,33 @@ public class LeagueOfPatience {
     int[][] durations
   ) {
     int[] times = new int[durations.length];
+    Date[] times2 = new Date[durations.length];// store quest times in order to get time between quests
+    times2[0]=startTime;
     // Your code along with comments here. Use the genericShortest function for reference.
     // You want to do similar things as the generic shortest function, except you want
     // to account for the time until the next quest time at each arrival at a location.
     // Feel free to borrow code from any of the existing methods.
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
+    int numVertices = durations[0].length;
+     Boolean[] processed = new Boolean[numVertices];
+     for (int v = 0; v < numVertices; v++) {
+      times[v] = Integer.MAX_VALUE;
+      processed[v] = false;
+    }
+    times[S]=0;
+    for (int count = 0; count < numVertices - 1 ; count++) {
+       int u = findNextToProcess(times, processed);
+      processed[u] = true;
+     for (int v = 0; v < numVertices; v++) {
+        if(v>0) times2[v]= getNextQuestTime(times2[v-1], u, v);
+        
+        if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+durations[u][v]+minutesBetween(times2[v-1],times2[v]) < times[v]) {//check if play time and time for quest to start is less than our current time for v
+          times[v] = times[u] + durations[u][v]+minutesBetween(times2[v-1],times2[v]);//add the time it takes for the quest to start in addition to the play time for quest
+          
+        }
+      }
+    }
 
     printShortestTimes(times);
 
@@ -142,7 +163,7 @@ public class LeagueOfPatience {
     printShortestTimes(times);
   }
 
-  public static void main (String[] args) {
+  public static void main(String[] args) {
     /* duration(e) */
     int playTimeGraph[][] = {
       {0, 10, 21, 0, 0, 0},
