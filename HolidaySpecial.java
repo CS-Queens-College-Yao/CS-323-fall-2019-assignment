@@ -36,8 +36,21 @@ public class HolidaySpecial {
     // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
+	
+	int[] subsequenceArray = new int[numSteps]; //array holding longest subsequence at each step
 
-    // Your code here
+	
+    for(int i = 1; i < numCooks+1; i++){
+		for(int j = 1; j < numSteps+1; j++){
+			// calculate longest subsequence starting at each step
+		}
+	}
+	
+	for(int i = 0; i < numCooks+1; i++){
+		for(int j = 0; j < numSteps +1; j++{
+			// place 1's in scheduleTable for correct scheduleTable[cook][step] 
+		}
+	}
 
     return scheduleTable;
   }
