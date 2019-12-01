@@ -1,7 +1,7 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Ismail Farouqe and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 /**
