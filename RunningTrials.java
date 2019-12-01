@@ -1,6 +1,6 @@
 /**
  * Running Trials
- * Author: Mohebullah Mir and Carolyn Yao
+ * Author: Mohebullah Mir, Hishaam Ali, Akshar Patel and Carolyn Yao
  * Does this compile or finish running within 5 seconds? exactly 5 seconds
  */
 
