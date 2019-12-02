@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * LeagueOfPatience
  * Author: Mohammed Chowdhury, Asad Malik, Nj Lin, Kareem El Sayed and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 /**
