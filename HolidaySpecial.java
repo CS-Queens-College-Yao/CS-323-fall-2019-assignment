@@ -1,7 +1,7 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: George Kaouris and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 /**
@@ -37,9 +37,58 @@ public class HolidaySpecial {
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
-    // Your code here
+    // we start from step 1 to be assigned to a cook
+    int nextStep = 1;
+    // number of steps already assigned
+    int stepsAssigned = 0;
+    // assign steps to cook until all steps assigned
+    // in this loop we basically assign the next maximum number of consecutive steps to a cook
+    while(stepsAssigned < numSteps) {
+    	// variable to store the maximum number of consecutive steps that can be assigned to a cook (C)
+    	// starting from nextStep from the remamining unassigned steps
+    	int maxStepsToAssign = 0;
+    	// variable to store the cook (C) that can do the maximum number of steps maxStepsToAssign
+    	int cookWithMaxSteps = 1;
+
+    	// iterate over all the cooks
+    	for(int cook = 1; cook <= numCooks; cook++) {
+    		// variable to find maximum number of steps 'cook' can be assigned starting from nextStep
+    		int currCookNumSteps = 0;
+    		// loop over all steps starting from nextStep
+    		for(int step = nextStep; step <= numSteps; step++) {
+    			// increment the count of steps if 'step' can be assigned to 'cook'
+    			if(signUpTable[cook][step] != 1) break;
+    			currCookNumSteps++;
+    		}
+    		// update the global maxStepsToAssign and cookWithMaxSteps based on currCookNumSteps
+    		if(currCookNumSteps > maxStepsToAssign) {
+    			maxStepsToAssign = currCookNumSteps;
+    			cookWithMaxSteps = cook;
+    		}
+    	}
+    	// update the number of steps that has been assigned
+    	stepsAssigned += maxStepsToAssign;
+    	// update the schedule table from the current assignment of steps to associated cook
+    	for(int i = 0; i < maxStepsToAssign; i++) {
+    		scheduleTable[cookWithMaxSteps][nextStep+i] = 1;
+    	}
+    	// update the nextStep from where we can find the next assignment
+    	nextStep += maxStepsToAssign;
+    }
 
     return scheduleTable;
+  }
+
+  /**
+   * Find the longest common subsequence
+   * @param seq1
+   * @param seq2
+   * @return
+   */
+  private int longestCommonSubsequence(int[] seq1, int[] seq2) {
+	  int maxLen = 0;
+
+	  return maxLen;
   }
 
   /**

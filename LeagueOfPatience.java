@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: George Kaouris and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 /**
@@ -41,9 +41,73 @@ public class LeagueOfPatience {
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
 
+    // save the total number of quests
+    int numQuests = durations[0].length;
+
+    // parent[v] = u means in the shortest path v will be next after u
+    int[] parent = new int[numQuests];
+
+    // processed[i] will be true if quest i's shortest time is already finalized
+    Boolean[] processed = new Boolean[numQuests];
+
+    // Initialize quest time to all destinations as INFINITE and processed[] as false
+    for (int v = 0; v < numQuests; v++) {
+      times[v] = Integer.MAX_VALUE;
+      processed[v] = false;
+      parent[v] = -1;
+    }
+
+    // quest time of S from itself is 0
+    times[S] = 0;
+
+    // time when next quest is requested initialized to start time
+    Date askingTime = startTime;
+
+    // Find shortest path to all the vertices
+    for (int count = 0; count < numQuests - 1 ; count++) {
+      // Pick the minimum quest time vertex from the set of vertices not yet processed.
+      // u is always equal to S in first iteration.
+      // Mark u as processed.
+      int u = findNextToProcess(times, processed);
+      processed[u] = true;
+
+      // terminate if we have reached the quest location T
+      if(u == T) break;
+
+      // Update time value of all the adjacent vertices of the picked vertex.
+      for (int v = 0; v < numQuests; v++) {
+    	  // get the closest quest time for u -> v
+    	  Date nextQuestTime = getNextQuestTime(askingTime, u, v);
+    	  // get the time required between asking and next quest time
+    	  int minsBetweenQuest = minutesBetween(askingTime, nextQuestTime)/60;
+
+        // Update time[v] only if is not processed yet, there is an edge from u to v,
+        // and total weight of path from source to v through u is smaller than current value of time[v]
+        if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+durations[u][v]+minsBetweenQuest < times[v]) {
+          times[v] = times[u] + durations[u][v] + minsBetweenQuest;
+          askingTime = nextQuestTime;
+          parent[v] = u;
+        }
+      }
+    }
+
     printShortestTimes(times);
 
-    // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
+    // Extra Credit: Code below to print the suggested play path... Ex:  "2, 4, 3, 5"
+    int u = T;
+    int[] pathReverse = new int[numQuests];
+    int pathLen = 0;
+    while(u >= 0) {
+    	pathReverse[pathLen++] = u;
+    	u = parent[u];
+    }
+    System.out.print("Optimal play path: ");
+    for(int i = pathLen-1; i >= 0; i--) {
+    	if(i > 0)
+    		System.out.print(pathReverse[i]+", ");
+    	else
+    		System.out.print(pathReverse[i]);
+    }
   }
 
   /**
