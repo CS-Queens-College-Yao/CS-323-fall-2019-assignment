@@ -1,7 +1,7 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Mohammed Chowdhury, Asad Malik, Nj Lin, Kareem El Sayed Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 /**
@@ -37,7 +37,19 @@ public class HolidaySpecial {
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
-    // Your code here
+     int[] signedUpSteps = new int[numSteps + 1];
+   /// int[] signedUpSteps = signUpTable[cook - 1];
+    
+    for (int cook = 1; cook <= numCooks+1; cook++) {   
+    	int[] steps = signUpTable[cook - 1];
+        for (int i = 0; i < steps.length; i++) {
+        	if(signedUpSteps[i]==0 && steps[i]==1){
+        		scheduleTable[cook-1][i] = 1;
+        		signedUpSteps[i] = 1;
+        	}
+        }
+      }
+
 
     return scheduleTable;
   }
