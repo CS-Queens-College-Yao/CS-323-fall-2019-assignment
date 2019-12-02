@@ -1,7 +1,7 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Luis Santos and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y/N	Y
  */
 
 /**
@@ -38,7 +38,45 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
+    
+    // Keeps track of how many steps have been assigned.
+    int ns = numSteps;
 
+    // Loops until all steps are assigned.
+    while(ns > 0){
+    	
+    	// Variable that keeps track of the cook that has the most consecutive steps.
+    	int step = 0;
+    	
+    	// Keeps track of the cook that has the most consecutive steps.
+    	int candidateCook = 0;
+    	for (int cook = 1; cook <= numCooks; cook++){
+    		int conSteps = 0;
+    		for (int steps = 1; steps <= numSteps; steps++){
+    		
+    			// conSteps only increments if consecutive steps are found.
+    			if (signUpTable[cook][steps] == 1){
+    				conSteps++;
+    			}
+    		}
+    		
+    		// Replaces the number of consecutive steps if and the cook if another cook
+    		// is found that has a higher number of consecutive steps.
+    		if (conSteps > step) {
+    			step = conSteps;
+    			candidateCook = cook;
+    		}
+    	}
+
+    	// The number of steps remaining is decremented by 1 every time a step is assigned.
+    	for(int steps = 1; steps <= numSteps; steps++){
+    		if(signUpTable[candidateCook][steps] == 1){
+    			scheduleTable[candidateCook][steps] = 1;
+    			ns--;
+    		}
+    	}
+    }
+    
     return scheduleTable;
   }
 
@@ -164,3 +202,4 @@ public class HolidaySpecial {
     sp.signUpScheduleShifts("Seafood Paella", 6, 11, cookSignUps3);
   }
 }
+

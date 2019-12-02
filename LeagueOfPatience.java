@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Luis Santos and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y/N	Y
  */
 
 /**
@@ -40,6 +40,15 @@ public class LeagueOfPatience {
     // Feel free to borrow code from any of the existing methods.
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
+    Boolean[] processed = new Boolean[durations.length];
+ // Initialize all distances as INFINITE and processed[] as false
+    for (int v = 0; v < durations.length; v++) {
+      times[v] = Integer.MAX_VALUE;
+      processed[v] = false;
+    }
+
+    // Distance of source vertex from itself is always 0
+   
 
     printShortestTimes(times);
 
@@ -166,3 +175,4 @@ public class LeagueOfPatience {
     // You can create a test case for your implemented method for extra credit below
   }
 }
+
