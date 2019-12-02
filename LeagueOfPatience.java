@@ -1,14 +1,12 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
-import java.util.Arrays;
 
 /**
  * LeagueOfPatience
  * Author: Omar Mirza and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
+ * YES
  */
 
 /**
@@ -46,6 +44,8 @@ public class LeagueOfPatience {
     Date time = startTime;
     java.util.Arrays.fill(times,Integer.MAX_VALUE);
     times[S]=0;
+    Date nextTime = new Date();
+    int minsBetween = 0;
 
     Integer[] prev = new Integer[durations.length]; //Used to reconstruct the play path
     //For each vertex, apply relaxation for all the edges
@@ -53,19 +53,21 @@ public class LeagueOfPatience {
       for(int i=0;i<durations.length;i++){
         for(int j=0;j<durations.length;j++){
           // If the adjacency matrix is 0, then its not connected and we ignore
-          Date nextTime = getNextQuestTime(time, i, j);
+          nextTime = getNextQuestTime(time, i, j);
           // Why does minsBetween keep giving super high values?
-          int minsBetween = minutesBetween(time, nextTime);
+          // I think minsBetween calculates seconds rather than minutes, but we'll roll w it
+          minsBetween = minutesBetween(time, nextTime);
           //Updates our adjacency matrix before we determine whether its the shortest
           durations[i][j]+= minsBetween;
           if(times[i] + durations[i][j] < times[j] && durations[i][j]!=0){ 
             // Only update the time when we choose a node.
             times[j] = times[i] + durations[i][j];
             prev[j]=i;
-            time = nextTime;
+            //time = nextTime;
           }
         }
       }
+      time = nextTime;
     }
 
     printShortestTimes(times);

@@ -1,7 +1,8 @@
 /**
  * Running Trials
- * Author: Your Name and Carolyn Yao
+ * Author: Omar Mirza and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
+ * YES
  */
 
 public class RunningTrials {
@@ -9,10 +10,13 @@ public class RunningTrials {
   // Do not change the parameters!
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
-    if(days==1) return possibleSpeeds;
-    if(possibleSpeeds==2) return 1;
-    minTests = Math.min(runTrialsRecur(possibleSpeeds-1, days-1), runTrialsRecur(possibleSpeeds-1, days))+1;
-    return minTests;
+    minTests = Integer.MAX_VALUE;
+    if(days==1 || possibleSpeeds <= 1) return possibleSpeeds;
+    for(int i=1;i<=possibleSpeeds;i++){
+      int x = Math.max(runTrialsRecur(i-1, days-1), runTrialsRecur(possibleSpeeds-i, days));
+      minTests = Math.min(x,minTests);
+    }    
+    return minTests+1;
   }
 
   // Optional:
@@ -31,7 +35,31 @@ public class RunningTrials {
   // Do not change the parameters!
   public int runTrialsBottomUp(int possibleSpeeds, int days) {
     int minTests = 0;
-    // Your code here
+    int[][] pastTrials = new int[possibleSpeeds+1][days+1];
+
+    //Base cases
+    for(int i=0;i<=days;i++){
+      pastTrials[1][i]=1;
+      pastTrials[0][i]=0;
+    }
+    for(int j=1;j<=possibleSpeeds;j++){
+      pastTrials[j][1]=j;
+    }
+    for(int k=2;k<=days;k++){
+      for(int l=2;l<=possibleSpeeds;l++){
+        pastTrials[l][k] = Integer.MAX_VALUE;
+        int x;
+        for(int m = 1; m<=l;m++){
+          x=Math.max(pastTrials[m-1][k-1],pastTrials[l-m][k]) + 1;
+          pastTrials[l][k] = Math.min(x,pastTrials[l][k]);
+        }
+      }
+    }
+    minTests = pastTrials[possibleSpeeds][days];
+
+
+
+
     return minTests;
   }
 

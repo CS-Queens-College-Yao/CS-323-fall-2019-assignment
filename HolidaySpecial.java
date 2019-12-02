@@ -2,6 +2,7 @@
  * HolidaySpecial
  * Author: Omar Mirza and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
+ * YES
  */
 
 /**
