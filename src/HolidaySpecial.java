@@ -1,7 +1,7 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Eric Munevar, Xavier Maldonado and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 /**
@@ -21,9 +21,9 @@ public class HolidaySpecial {
    * @param numCooks The number of cooks who can participate, m
    * @param numSteps The number of steps in the recipe, n
    * @param signUpTable An easy lookup tool, signUpTable[x][Y] = cook X signed up or did not sign up for step Y.
-   *      Example:
-          signUpTable[1][3] = 1 if cook 1 signed up for Step 3
-          signUpTable[1][3] = 0 if cook 1 didn't sign up for Step 3
+   * Example:
+     signUpTable[1][3] = 1 if cook 1 signed up for Step 3
+     signUpTable[1][3] = 0 if cook 1 didn't sign up for Step 3
    * @return scheduleTable: a table similar to the signUpTable where scheduleTable[X][Y] = 1 means
    *     cook X is assigned to step Y in an optimal schedule
    */
@@ -37,7 +37,37 @@ public class HolidaySpecial {
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
+    
     // Your code here
+    int[] signedUpSteps = new int[numSteps + 1];
+    
+    
+     for (int curCook = 1; curCook <= numCooks + 1; curCook++) {   
+     	
+    	 
+    	 int[] performedSteps = signUpTable[curCook - 1];
+     	//Outer loop iterating through each steps that each cook can perform
+    
+    	 
+     	for (int step = 0; step < performedSteps.length; step++) {
+     
+     		
+     		if(performedSteps[step] == 1 && signedUpSteps[step] == 0){
+         		//Inner loop marking the first steps to be stored/performed
+         		//if step is already stored by another previous cook then skip
+        
+         	
+     			scheduleTable[curCook-1][step] = 1;
+         		
+     			
+         		signedUpSteps[step] = 1;
+         	}
+     		
+         }
+     	
+     
+     }
+     
 
     return scheduleTable;
   }
