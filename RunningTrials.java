@@ -10,6 +10,9 @@ public class RunningTrials {
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
+    
+  
+    
     return minTests;
   }
 
@@ -18,6 +21,9 @@ public class RunningTrials {
   public int runTrialsMemoized() {
     int minTests = 0;
     // Your optional code here
+    
+    
+    
     return minTests;
   }
 
@@ -25,6 +31,9 @@ public class RunningTrials {
   public int runTrialsBottomUp(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
+    
+    
+    
     return minTests;
   }
 
