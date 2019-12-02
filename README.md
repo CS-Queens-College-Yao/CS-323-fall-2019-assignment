@@ -27,25 +27,26 @@ There are three problems overall. First, instructions. Please read carefully:
 
 ## 1. Running Trials and Tribulations
 
-You are developing a training program for recovering but injury-prone athletes that will allow them to zero in on what pace they should be running a long distance race at. The athlete tells you they have M weeks to prepare, and over those weeks they want to test run a range of N different speeds to figure out the fastest they can run during the race without injuring themselves. There is always enough time to try out all N of those speeds over the course of M weeks. However, you'd want to minimize the number of test runs so they can practice on the determined speed.
+You are developing a training program for recovering but injury-prone athletes that will allow them to figure on what pace they should do their race training at. The athlete tells you they have M days to prepare, and over those days they want to figure out the fastest speed out of a range of N different speeds (we'll index them as 1st, 2nd, 3rd, ... to the nth) they can train for the race at without injuring themselves.
+Assume that you are always given a reasonable N and M and there is always enough time to try out all N of those speeds over the course of M days (N <= M).
+
+ If the athlete only had one day, then you would recommend that they start at the 1st speed, and increment 1 by 1 up to the point at which they get injured. It would take you minimum N test runs. However, if you had more than one day, you'd want to minimize the number of test runs it takes to get to that breaking point because the athlete wants to ideally spend the rest of the time training at that set speed.
 
 * You will recommend that the athlete always keeps their training conditions about the same, so the only difference should be the speed.
-* If the athlete is burned out during a practice run on a particular speed, it will cost them
- a whole week to recover. And they know they definitely cannot run at any faster speed.
-* If the athlete is not burned out during a practice run on a particular speed, it will not cost them a whole week to recover and they can continue to run that week. And the athlete can maintain that speed or under during the actual half marathon.
+* If the athlete is minorly injured during a practice run on a particular speed, they should set the rest of the day to recover and they can only start running again the next day. And they know they definitely cannot run at any faster speed than the one they got injured out. For example, if the athlete tries out the 6th speed and does get injured, the next set of possibilities to test would be 1st to 4th speed and losing 1 day.
+* If the athlete is not injured during a practice run on a particular speed, they can continue to run that day. And the athlete can maintain at least that speed during the actual race. For example, if the athlete tries the 5th speed and doesn't hurt any muscles, the problem that remains is testing 6th speed up to the nth speed and the same number of days remaining.
 * Injuries are possible at all possible speeds.
-* In the worst case, the athlete could run all possible speeds.
 
-#### Given: M weeks, N mile paces
-#### Find: What’s the minimum amount of speedtest runs the athlete needs to go on before figuring out the perfect speed for the race?
+#### Given: M days, N paces
+#### Find: What’s the <b>minimum number of speedtest runs the athlete needs to go on </b> to figure out the fastest speed they can train for a race at without getting injured?
 
 #### (a) Describe the optimal substructure/recurrence that would lead to a recursive solution
-#### (b) Code your recursive solution under runTrialsRecur(int possibleSpeeds, int weeks). If your recursive function runs forever, in order for grading to happen quickly please comment out the code progress you made instead.
-#### (c) Draw recurrence tree for given (# speeds = 6, # weeks = 2)
-#### (d) How many distinct subproblems do you end up with given 6 speeds and 2 weeks?
-#### (e) How many distinct subproblems for N speeds and M weeks?
+#### (b) Code your recursive solution under runTrialsRecur(int possibleSpeeds, int days). If your recursive function runs forever, in order for grading to happen quickly please comment out the code progress you made instead.
+#### (c) Draw recurrence tree for given (# speeds = 6, # days = 2)
+#### (d) How many distinct subproblems do you end up with given 6 speeds and 2 days?
+#### (e) How many distinct subproblems for N speeds and M days?
 #### (f) Describe how you would memoize runTrialsRecur.
-#### (g) Code a dynamic programming bottom-up solution runTrialsBottomUp(int possibleSpeeds, int weeks)
+#### (g) Code a dynamic programming bottom-up solution runTrialsBottomUp(int possibleSpeeds, int days)
 #### (h) Extra Credit: 15 pts, write a function that will also print which speeds the athlete should test during those minimum number of speedtest runs, and have it print to the output
 
 #### Turn in: In your write-up file, parts: a, c, d, e, f with clear and careful explanations! Coding parts b, g, h (optional) in the file RunningTrials.java
