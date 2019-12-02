@@ -27,6 +27,7 @@ public class LeagueOfPatience {
    * @param T the t th location on the game map
    * @param durations durations[u][v] Table of how long game play between u and v takes in minutes
    */
+
   public void myFastestPlay(
     int S,
     int T,
@@ -43,7 +44,7 @@ public class LeagueOfPatience {
     // You can also make new helper methods.
     
     //startTimes are datatype Date, make Date Array of startTimes.
-    Date[] startTimes = new Date[numVertices];
+ /*   Date[] startTimes = new Date[numVertices];
     //First startTime for array will be given startTime
     startTimes[0] = startTime;
     Boolean[] processed = new Boolean[numVertices];
@@ -66,10 +67,12 @@ public class LeagueOfPatience {
             times[u] != integer.MAX_VALUE && times[u]+graph[u][v] < times[v])
                     times[v] = times[u] + graph[u][v];
         }
+        
     }
     
     printShortestTimes(times);
-
+  */  
+  System.out.println("DOES NOT COMPILE - SEE CODE");
     // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
   }
 
