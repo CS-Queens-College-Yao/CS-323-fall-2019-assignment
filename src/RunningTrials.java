@@ -32,8 +32,7 @@ public class RunningTrials {
 
             minTests = Math.min(maxTest,minTests);
         }
-// days = eggs  speeds = floors
-//      speed days
+
         return minTests;
     }
 
