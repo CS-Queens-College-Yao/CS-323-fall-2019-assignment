@@ -33,6 +33,7 @@ public class LeagueOfPatience {
     Date startTime,
     int[][] durations
   ) {
+    // This is the array where we'll store all the final shortest times
     int[] times = new int[durations.length];
     // Your code along with comments here. Use the genericShortest function for reference.
     // You want to do similar things as the generic shortest function, except you want
@@ -42,8 +43,8 @@ public class LeagueOfPatience {
     // You can also make new helper methods.
     int end= T;
     int start = S;
-    // This is the array where we'll store all the final shortest times
-    int[] times = new int[numVertices];
+    int numVertices = durations.length;
+ 
     // processed[i] will true if vertex i's shortest time is already finalized
     Boolean[] processed = new Boolean[numVertices];
     // we store our path in path
