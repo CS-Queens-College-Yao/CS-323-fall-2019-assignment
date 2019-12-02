@@ -9,6 +9,7 @@ import java.util.Calendar;
  */
 
 /**
+ * Name Rommel Gay
  * This class contains solutions to the League of Patience problem in the
  * myFastestPlay method. There is an existing implementation of a
  * shortest-paths algorithm. As it is, you can run this class and get the solutions
