@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author:Chuhui Chen and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 /**
