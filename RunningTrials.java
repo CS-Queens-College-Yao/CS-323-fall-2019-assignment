@@ -2,7 +2,7 @@
  * Running Trials
  * Author: Reveka Lee and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
- N
+DOES NOT COMPILE. See code.
  */
 
 public class RunningTrials {
