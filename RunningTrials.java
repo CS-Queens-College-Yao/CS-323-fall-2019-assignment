@@ -1,7 +1,7 @@
 /**
  * Running Trials
  * Author: Anthony Ramnarain and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 public class RunningTrials {

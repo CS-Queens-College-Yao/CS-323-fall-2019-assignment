@@ -1,7 +1,7 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Anthony and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 /**
@@ -22,22 +22,52 @@ public class HolidaySpecial {
    * @param numSteps The number of steps in the recipe, n
    * @param signUpTable An easy lookup tool, signUpTable[x][Y] = cook X signed up or did not sign up for step Y.
    *      Example:
-          signUpTable[1][3] = 1 if cook 1 signed up for Step 3
-          signUpTable[1][3] = 0 if cook 1 didn't sign up for Step 3
+  signUpTable[1][3] = 1 if cook 1 signed up for Step 3
+  signUpTable[1][3] = 0 if cook 1 didn't sign up for Step 3
    * @return scheduleTable: a table similar to the signUpTable where scheduleTable[X][Y] = 1 means
    *     cook X is assigned to step Y in an optimal schedule
    */
 
   public int[][] makeShifts(
-    int numCooks,
-    int numSteps,
-    int[][] signUpTable
+          int numCooks,
+          int numSteps,
+          int[][] signUpTable
   ) {
     // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
+
+    int currentStep = 1;
+    int count = 0;
+    while (currentStep <= numSteps) {
+      int maxStride = -1;
+      int maxStrider = 0;
+      for (int i = 1; i <= numCooks; i++) {
+        int j = 0;
+        for (j = currentStep; j <= numSteps; j++) {
+          if (signUpTable[i][j] == 0) {
+            if (j-currentStep > maxStride) {
+              maxStride = j-currentStep;
+              maxStrider = i;
+            }
+            break;
+          }
+        }
+        if (j > numSteps) {
+          maxStride = j-currentStep;
+          maxStrider = i;
+        }
+      }
+      for (int i = currentStep; i < currentStep+maxStride; i++) {
+        scheduleTable[maxStrider][i] = 1;
+      }
+      currentStep += maxStride;
+      count++;
+      if (count==4)
+        break;
+    }
 
     return scheduleTable;
   }
@@ -47,8 +77,8 @@ public class HolidaySpecial {
    * @param numSteps the number of steps in the recipe
    * @param cookSignUps cook sign ups ex: {{1, 2, 4}, {3, 5}, {6, 7}}
    * @return a lookup table so if we want to know if cook x can do step y,
-      lookupTable[x][y] = 1 if cook x can do step y
-      lookupTable[x][y] = 0 if cook x cannot do step y
+  lookupTable[x][y] = 1 if cook x can do step y
+  lookupTable[x][y] = 0 if cook x cannot do step y
    */
   public int[][] makeSignUpLookup(int numSteps, int[][] cookSignUps) {
     int numCooks = cookSignUps.length;

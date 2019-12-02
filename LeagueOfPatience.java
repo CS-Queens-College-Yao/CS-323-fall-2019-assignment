@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Anthony Ramnarain and Carolyn Yao
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 /**
@@ -28,10 +28,10 @@ public class LeagueOfPatience {
    * @param durations durations[u][v] Table of how long game play between u and v takes in minutes
    */
   public void myFastestPlay(
-    int S,
-    int T,
-    Date startTime,
-    int[][] durations
+          int S,
+          int T,
+          Date startTime,
+          int[][] durations
   ) {
     int[] times = new int[durations.length];
     // Your code along with comments here. Use the genericShortest function for reference.
@@ -41,7 +41,55 @@ public class LeagueOfPatience {
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
 
+    long start  = startTime.getTime();
+    int numVertices = durations.length;
+
+    // processed[i] will true if vertex i's shortest time is already finalized
+    Boolean[] processed = new Boolean[numVertices];
+
+    int[] previous = new int[numVertices];
+    for (int i = 0; i < numVertices; i++) {
+      previous[i] = -1;
+    }
+
+
+    // Initialize all distances as INFINITE and processed[] as false
+    for (int v = 0; v < numVertices; v++) {
+      times[v] = Integer.MAX_VALUE;
+      processed[v] = false;
+    }
+
+    // Distance of source vertex from itself is always 0
+    times[S] = 0;
+
+    // Find shortest path to all the vertices
+    for (int count = 0; count < numVertices - 1 ; count++) {
+      // Pick the minimum distance vertex from the set of vertices not yet processed.
+      // u is always equal to source in first iteration.
+      // Mark u as processed.
+      int u = findNextToProcess(times, processed);
+      processed[u] = true;
+
+      // Update time value of all the adjacent vertices of the picked vertex.
+      for (int v = 0; v < numVertices; v++) {
+        // Update time[v] only if is not processed yet, there is an edge from u to v,
+        // and total weight of path from source to v through u is smaller than current value of time[v]
+        int temp = durations[u][v] + minutesBetween(startTime, getNextQuestTime(new Date(start+times[u]*1000), u, v));
+        if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && temp < times[v]) {
+          times[v] = temp;
+          previous[v] = u;
+        }
+      }
+    }
+
     printShortestTimes(times);
+    System.out.println("Shortest path to destination " + T + ":");
+    int current = T;
+    while (current != S) {
+      System.out.print(current + " <-- ");
+      current = previous[current];
+    }
+    System.out.println(S);
 
     // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
   }
@@ -94,7 +142,7 @@ public class LeagueOfPatience {
   public void printShortestTimes(int times[]) {
     System.out.println("Play time to advance to various locations");
     for (int i = 0; i < times.length; i++)
-        System.out.println(i + ": " + times[i] + " minutes");
+      System.out.println(i + ": " + times[i] + " minutes");
   }
 
   /**
@@ -145,12 +193,12 @@ public class LeagueOfPatience {
   public static void main (String[] args) {
     /* duration(e) */
     int playTimeGraph[][] = {
-      {0, 10, 21, 0, 0, 0},
-      {0, 0, 21, 10, 0, 0},
-      {0, 0, 0, 25, 0, 78},
-      {0, 0, 16, 0, 11, 0},
-      {0, 0, 22, 16, 0, 28},
-      {0, 0, 0, 0, 0, 0},
+            {0, 10, 21, 0, 0, 0},
+            {0, 0, 21, 10, 0, 0},
+            {0, 0, 0, 25, 0, 78},
+            {0, 0, 16, 0, 11, 0},
+            {0, 0, 22, 16, 0, 28},
+            {0, 0, 0, 0, 0, 0},
     };
     LeagueOfPatience t = new LeagueOfPatience();
     try {
