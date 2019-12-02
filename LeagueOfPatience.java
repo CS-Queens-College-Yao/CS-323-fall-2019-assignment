@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.Stack;
 
 /**
  * LeagueOfPatience
@@ -44,6 +45,9 @@ public class LeagueOfPatience {
     // processed[i] will true if vertex i's shortest time is already finalized
     Boolean[] processed = new Boolean[numVertices];
 
+    // Use an array of ints to represent each vertex's shortest parent node
+    int[] shortedPaths = new int[durations.length];
+
     // Initialize all distances as INFINITE and processed[] as false
     for (int v = 0; v < numVertices; v++) {
       times[v] = Integer.MAX_VALUE;
@@ -52,6 +56,8 @@ public class LeagueOfPatience {
 
     // Distance of source vertex from itself is always 0
     times[S] = 0;
+    // Parent node of source vertex is itself
+    shortedPaths[S] = 0;
 
     // Find shortest path to all the vertices
     for (int count = 0; count < numVertices - 1 ; count++) {
@@ -71,13 +77,27 @@ public class LeagueOfPatience {
           // If the time that it takes based on the path above is lower the the current time, update it this time
           if(timeIncludingAPICall < times[v])
             times[v] = timeIncludingAPICall;
+            shortedPaths[v] = u;
         }
       }
     }
 
-    printShortestTimes(times);
+    System.out.println("The shortest path from "+ S + " to " + T + " is " + times[T]);
 
     // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
+    printPath(shortedPaths, S, T);
+  }
+  public void printPath(int[] shortestPaths, int source, int finish){
+    Stack<Integer> stack = new Stack<Integer>();
+    int temporaryPath = finish;
+    while(temporaryPath != source){
+      stack.push(temporaryPath);
+      temporaryPath = shortestPaths[temporaryPath];
+    }
+    System.out.print("shortest path from Start to finish would be " + source + ",");
+    while(!stack.empty()){
+      System.out.print(" " + stack.pop() + ",");
+    }
   }
   /**
    * This function determines the time it takes to get from 1 vertex to another
