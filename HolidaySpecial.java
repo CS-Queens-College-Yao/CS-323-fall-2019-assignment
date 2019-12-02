@@ -5,6 +5,7 @@
  */
 
 /**
+ * Name Rommel Gay
  * This class implements a scheduler to assign cooks to steps in a special
  * recipe. There are three test cases in the main method. Please read through
  * the whole file before attempting to code the solution.
@@ -38,7 +39,48 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
-
+  //go through each recipe step, x
+    for(int x = 1; x <= numSteps; x++) {	    
+    	
+    	//go through each cook in sign up table, i
+    	for(int i =1; i < signUpTable.length; i++) {
+	    	
+    		//cook var to hold single cook and list of step
+    		int[] cook = signUpTable[i];
+    		
+    		//go through selected cooks volunteered steps according to current step, j
+	    	for(int j = x; j <cook.length; j++) {
+	    		
+	    		//match if current cook does current step
+	    		//if match, check until cook cannot do next step
+	    		//if no match, check the next cook
+	    		if(cook[x] == 1) {	    			
+	    			while(x<=numSteps && cook[x]==1) {	    				
+//	    				System.out.print("cook " + i + " match step: " + x + "; ");
+	    				
+	    				//assign current cook to current recipe step
+	    				scheduleTable[i][x] = 1;	    					    				
+	    				x++;	    				
+	    			}
+//	    			System.out.println();
+	    			
+	    			//Current cook could not do next step, check next cook
+	    			break;
+	    		}	
+	    		
+	    		//reset counter to recheck cooks who can do next step
+    			if(i==signUpTable.length-1) {
+    				i=0;
+    			}
+//	    		System.out.print(cook[j]);
+	    			
+	    	}
+	    	
+	    	
+//	    	System.out.println();
+	    	 	
+	    }
+    }
     return scheduleTable;
   }
 

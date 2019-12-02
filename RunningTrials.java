@@ -1,7 +1,7 @@
 /**
  * Running Trials
- * Author: Your Name and Carolyn Yao
- * Does this compile or finish running within 5 seconds? Y/N
+ * Author: Rommel Gay
+ * Does this compile or finish running within 5 seconds? Y
  */
 
 public class RunningTrials {
@@ -10,7 +10,14 @@ public class RunningTrials {
   public int runTrialsRecur(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
+    if(possibleSpeeds > 0 && days > 0) {
+    	minTests = 1 + runTrialsRecur(possibleSpeeds-2, days-1);
+    	return minTests + runTrialsRecur(possibleSpeeds-1, days);
+    }
     
+    return minTests;
+    
+  }
   
     
     return minTests;
@@ -31,7 +38,21 @@ public class RunningTrials {
   public int runTrialsBottomUp(int possibleSpeeds, int days) {
     int minTests = 0;
     // Your code here
+    int[] t = new int[possibleSpeeds*days];
     
+    t[0] = 0;
+    t[1] = 1;
+    
+    for(int i = 2; i <= possibleSpeeds; i++) {
+    	t[i] = t[i-1] + t[i-2];
+    	for(int j = i+2, k = 1; j <= possibleSpeeds && k <= days; j+=2) {    		
+    		t[i]++;
+    		k++;
+    	}
+    }
+    
+    
+    minTests = t[possibleSpeeds];
     
     
     return minTests;
