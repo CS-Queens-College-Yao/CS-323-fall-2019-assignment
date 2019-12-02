@@ -19,9 +19,7 @@ public class RunningTrials {
     
   }
   
-    
-    return minTests;
-  }
+
 
   // Optional:
   // Pick whatever parameters you want to, just make sure to return an int.
