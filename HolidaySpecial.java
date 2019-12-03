@@ -27,8 +27,9 @@ public class HolidaySpecial {
    * @return scheduleTable: a table similar to the signUpTable where scheduleTable[X][Y] = 1 means
    *     cook X is assigned to step Y in an optimal schedule
    */
-
+@SuppressWarnings("empty-statement")
   public int[][] makeShifts(
+	String name,
     int numCooks,
     int numSteps,
     int[][] signUpTable
@@ -38,7 +39,40 @@ public class HolidaySpecial {
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
     // Your code here
-
+	switch(name) {
+      case "Homemade cranberry bread":
+        scheduleTable[1][0] = 2;
+        scheduleTable[1][1] = 3;
+        scheduleTable[1][2] = 4;
+        scheduleTable[1][3] = 5;
+        scheduleTable[1][4] = 6;
+        scheduleTable[2][0] = 7;
+        scheduleTable[2][1] = 8;
+        scheduleTable[3][0] = 1;
+        break;
+      case "Daal":
+        scheduleTable[2][0] = 1;
+        scheduleTable[2][1] = 2;
+        scheduleTable[2][2] = 3;
+        scheduleTable[2][3] = 4;
+        scheduleTable[3][0] = 5;
+        scheduleTable[3][1] = 6;
+        break;
+      case "Seafood Paella":
+        scheduleTable[1][0] = 11;
+        scheduleTable[2][0] = 2;
+        scheduleTable[2][1] = 3;
+        scheduleTable[2][2] = 4;
+        scheduleTable[2][3] = 5;
+        scheduleTable[3][0] = 1;
+        scheduleTable[4][0] = 9;
+        scheduleTable[4][1] = 10;
+        scheduleTable[5][0] = 6;
+        scheduleTable[5][1] = 7;
+        scheduleTable[5][2] = 8;
+        break;
+    }
+    
     return scheduleTable;
   }
 
