@@ -41,6 +41,17 @@ public class LeagueOfPatience {
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
 
+    int start = S;
+    int end = T;
+    System.out.println("Wait Time!");
+    for (int i = 0; i <= times.length; i++){
+        Date staTime = startTime;
+        Date nexTime = getNextQuestTime(staTime, S, T);
+        int dur = minutesBetween(staTime, nexTime);
+        System.out.println(i+ ": " + dur);
+    }
+    printShortestTimes(times);
+
     printShortestTimes(times);
 
     // Extra Credit: Code below to print the suggested play path i.e. "2, 4, 3, 5"
