@@ -1,6 +1,10 @@
+import java.awt.List;
+import java.util.ArrayList;
+
+
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
+ * Author: Daniel Kopeloff and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -28,7 +32,7 @@ public class HolidaySpecial {
    *     cook X is assigned to step Y in an optimal schedule
    */
 
-  public int[][] makeShifts(
+	public int[][] makeShifts(
     int numCooks,
     int numSteps,
     int[][] signUpTable
@@ -36,9 +40,140 @@ public class HolidaySpecial {
     // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
+    int [] steps = new int[numCooks];
+    int temp = 0;
+    int max = 0;
+    int chefIndex = 0;
+    
+    boolean tester = false;
+    boolean noStreak = false;
+//    System.out.println(numSteps);
+//    System.out.println("i is " + Integer.toString(signUpTable[0].length -1));
+//    System.out.println("j is " + Integer.toString(signUpTable.length -1));
+    
+       
+    
+//    for(int i = 1 ; i <= signUpTable[0].length -1 ; i ++) 
+//	{
+//    	
+//		for(int j = 1; j <= signUpTable.length - 1; j++) {
+//			System.out.print(signUpTable[j][i]);
+//			System.out.print(" ");
+//			}
+//		System.out.println();
+//	}
+//	
+//   System.out.println();
+   
+   for( int x = 1 ; x <= (signUpTable[0].length -1) ; ){
+	   
+	   for(int y = 1 ; y <= signUpTable.length - 1; y++) {
+		   
+		   if(signUpTable[y][x] == 1) {
+			  
+			                         
+			   if((x+1 <= (signUpTable[0].length -1)  &&  signUpTable[y][x+1] == 1) ){
+				   temp = x;
+					   while(temp <= (signUpTable[0].length -1)  &&  signUpTable[y][temp] == 1){
+						   steps[y-1] = steps[y-1] + 1;
+						   temp++;
+						   
+					   
+				   }
+				 
+				   
+			   }
+			   else if(scheduleTable[y][x] == 0 && !noStreak) {
+				 
+				   scheduleTable[y][x] = 1;
+				   noStreak = true;
+			   }
+			   if(y == signUpTable.length - 1 || x == (signUpTable[0].length -1) ) {
+				   
+			   }
+			   else {
+				
+				 
+				   for(int r = y ; r <= signUpTable.length - 1 ; r++ ) {
+					   		if(tester) {
+					   			r = signUpTable.length ;
+					   		}
+					   		else {
+					   			if(r != y)
+					   				if(signUpTable[r][x] == 1) {
+					   					tester = true;
+					   					
+					   				}
+					   			}
+				   }
+				   if(!tester) {
+					   y = signUpTable.length;
+					   tester = false;
+				   }
+			   }
+			   
+		   }
+		   
+	   }
+	   
+	   for(int z = 0 ; z <= steps.length -1 ; z++) {
+		   
+		   
+		   
+		   if(steps[z] > max) {
+			   max = steps[z];
+			   chefIndex = z;
+		   }
+	   } 
+	   if(noStreak && max >= 1) {
+		   for(int t = 0 ; t < signUpTable.length ; t++) {
+			   scheduleTable[t][x] = 0;
+		   }
+	   }
+	  
+	  
+	   for( int s = x  ; s < (max + x) && (max + x) <= (signUpTable[0].length -1) ; s++) {
+		
+		   scheduleTable[chefIndex+1][s] = 1;
+	   } 
+	   if(max + x > signUpTable[0].length - 1) {
+		   while(x < (signUpTable[0].length -1) ) {
+			   scheduleTable[chefIndex+1][x] = 1;
+			   x++;
+		   }
+		 
+	   }
+	   else {
+		   if (max == 0)
+			   x = x + max +1  ;
+		   else if (x+max >= signUpTable[0].length -1) {
+			   x = signUpTable[0].length -1;
+			  
+		   }
+		   else {
+			   x = x + max;
+			  
+		   }
+	   }
+	 
+	    max = 0;
+	    
+	   	steps = new int[numCooks];
+	   	noStreak = false;
+	   	
+	   
 
-    // Your code here
+	   }
+	   		
+	   
+	   
+   
+  
+   
 
+   System.out.println();
+   System.out.println();
+   System.out.println();
     return scheduleTable;
   }
 
@@ -151,7 +286,7 @@ public class HolidaySpecial {
   public static void main(String args[]){
     HolidaySpecial sp = new HolidaySpecial();
 
-    // recipe 1: Example 1 from README, 4 cooks, 8 steps
+//    // recipe 1: Example 1 from README, 4 cooks, 8 steps
     int[][] cookSignUps1 = {{2, 3, 4, 5, 6}, {5, 7, 8}, {1, 3, 4, 8}, {1, 5, 7, 8}};
     sp.signUpScheduleShifts("Homemade cranberry bread", 4, 8, cookSignUps1);
 
@@ -159,8 +294,8 @@ public class HolidaySpecial {
     int[][] cookSignUps2 = {{2, 3, 4, 5}, {1, 2, 3, 4}, {1, 2, 4, 5, 6}};
     sp.signUpScheduleShifts("Daal", 3, 6, cookSignUps2);
 
-    // recipe 3: 6 cooks, 11 steps
+//    // recipe 3: 6 cooks, 11 steps
     int[][] cookSignUps3 = {{7, 10, 11}, {2, 3, 4, 5, 7}, {1, 5, 10}, {8, 9, 10}, {5, 6, 7, 8}, {1, 3, 4, 8}};
     sp.signUpScheduleShifts("Seafood Paella", 6, 11, cookSignUps3);
-  }
+   }
 }

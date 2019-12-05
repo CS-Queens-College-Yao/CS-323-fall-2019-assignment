@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 /**
  * LeagueOfPatience
- * Author: Your Name and Carolyn Yao
+ * Author: Daniel Kopeloff and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -40,6 +40,62 @@ public class LeagueOfPatience {
     // Feel free to borrow code from any of the existing methods.
     // You will find the getNextQuestTime method and the minutesBetween method helpful.
     // You can also make new helper methods.
+    Boolean[] processed = new Boolean[durations.length];
+    Date currTime = startTime;
+    Date tempTime = null;
+    Date [] possibleTimes = new Date[durations.length];
+    int[] possibleMin = new int[durations.length];
+    int betterTime = 100000000;
+    int timeHolder = 0;
+    
+    
+    
+    
+    for (int v = 0; v < durations.length; v++) {
+        times[v] = Integer.MAX_VALUE;
+        processed[v] = false;
+      }
+    times[S] = 0;
+    for (int count = 0; count < durations.length - 1 ; count++) {
+        // Pick the minimum distance vertex from the set of vertices not yet processed.
+        // u is always equal to source in first iteration.
+        // Mark u as processed.
+      	
+        int u = findNextToProcess(times, processed);
+        processed[u] = true;
+
+        // Update time value of all the adjacent vertices of the picked vertex.
+        for (int v = 0; v < durations.length; v++) {
+          // Update time[v] only if is not processed yet, there is an edge from u to v,
+          // and total weight of path from source to v through u is smaller than current value of time[v]
+
+        	
+        	if(durations[u][v] != 0) {
+        	tempTime  = addMin(currTime , durations[u][v]);
+        	
+        		
+        	
+        	}
+          if (!processed[v] && durations[u][v]!=0 && times[u] != Integer.MAX_VALUE && 
+        		  times[u]+durations[u][v] + (int)(tempTime.getTime()/1000000) < times[v]) {
+        	  System.out.println("Times[u] is " + times[u] + " with u being " + u + 
+        			  " Temp Time " + (int)(tempTime.getTime()/1000000)  + " And V being " + v);
+           times[v] = times[u] + (int)(tempTime.getTime()/1000000);
+           currTime = tempTime;
+//            if ( u != 0) {
+//            	currTime = tempTime;
+//            			}
+           
+          }
+
+    
+
+    }
+    
+    
+    
+    
+    }
 
     printShortestTimes(times);
 
@@ -63,6 +119,13 @@ public class LeagueOfPatience {
     calendar.add(Calendar.MINUTE, minutesUntilNext);
     return calendar.getTime();
   }
+  
+  public Date addMin(Date askingTime, int time) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(askingTime);
+	    calendar.add(Calendar.MINUTE, time);
+	    return calendar.getTime();
+	  }
 
   /**
    * This finds the minute difference between two time (Date) objects.
@@ -70,6 +133,7 @@ public class LeagueOfPatience {
   public int minutesBetween(Date time1, Date time2) {
     return (int) (time2.getTime() - time1.getTime()) / 1000;
   }
+  
 
   /**
    * Finds the vertex with the minimum time from the source that has not been
@@ -88,6 +152,7 @@ public class LeagueOfPatience {
         minIndex = i;
       }
     }
+   
     return minIndex;
   }
 
@@ -105,9 +170,11 @@ public class LeagueOfPatience {
    */
   public void genericShortest(int graph[][], int source) {
     int numVertices = graph[0].length;
+    
 
     // This is the array where we'll store all the final shortest times
     int[] times = new int[numVertices];
+    
 
     // processed[i] will true if vertex i's shortest time is already finalized
     Boolean[] processed = new Boolean[numVertices];
@@ -126,6 +193,7 @@ public class LeagueOfPatience {
       // Pick the minimum distance vertex from the set of vertices not yet processed.
       // u is always equal to source in first iteration.
       // Mark u as processed.
+    	
       int u = findNextToProcess(times, processed);
       processed[u] = true;
 
@@ -134,8 +202,11 @@ public class LeagueOfPatience {
         // Update time[v] only if is not processed yet, there is an edge from u to v,
         // and total weight of path from source to v through u is smaller than current value of time[v]
         if (!processed[v] && graph[u][v]!=0 && times[u] != Integer.MAX_VALUE && times[u]+graph[u][v] < times[v]) {
+//        	System.out.println("Times[u] is " + times[u] + " duations[u][v] " + graph[u][v] + " And V being " + v
+//        		+	" with u being " + u  );
           times[v] = times[u] + graph[u][v];
         }
+    	  
       }
     }
 
