@@ -38,22 +38,29 @@ public class HolidaySpecial {
         // in the table in the right places based on the return description
         int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
         int nextStep = 1; //Starting with the first step
+        //Starting the algorithm
         while (nextStep <= numSteps) {
             int idealCook = 0;
             int initialStep = nextStep; //Used for keeping track of where we are starting longest consecutive subsequence
+            //Checking each cook for the steps they can do
             for (int cook = 1; (cook <= numCooks && nextStep <= numSteps); cook++) {
-                if (signUpTable[cook][nextStep] == 0) continue;
+                if (signUpTable[cook][nextStep] == 0) continue; //Making sure the cook can do the step
+                //If cook can do the step, enter the else block
                 else {
-                    if (!canCookPreviousSteps(initialStep, nextStep, cook, signUpTable)) continue;
+                    if (!canCookPreviousSteps(initialStep, nextStep, cook, signUpTable)) continue; //Ensuring Consistency
+                    //We have a chef who can do more steps!
                     nextStep++;
                     idealCook = cook;
+                    //Going all the way to the chef's limits of consecutive steps
                     while (nextStep <= numSteps) {
                         if (signUpTable[cook][nextStep] == 0) break;
                         else nextStep++;
                     }
+                    //Just staying within array
                     if (nextStep > numSteps) break;
                 }
             }
+            //Assigning our ideal cook the steps
             for (int step = initialStep; step < nextStep; step++) {
                 scheduleTable[idealCook][step] = 1;
             }
